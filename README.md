@@ -4,5 +4,9 @@ Entirety of the Drupal site I designed for a client.  It is fully responsive and
 The college this was made for decided to push their own implementation of Drupal downwards, and as a result my implementation was scrapped and never used.  
 
 Particular code trees of interest:
+
+
 root -> profiles -> julio is where most of the development took place
+
+
 root -> profiles -> julio -> themes -> watt -> styles -> style.css is where most of the CSS development was made.  You can find the majority of the code responsible for responsive layouts there.
