@@ -1,0 +1,49 @@
+<?php
+/**
+ * @file
+ * Code for the Slideshow feature.
+ */
+
+include_once('julio_slideshow.features.inc');
+
+/**
+ * Implementation of hook_block_view_alter()
+ */
+function julio_slideshow_block_view_alter(&$data, $block) {
+	if ($block->module == 'media_nivo_slider' && !empty($block->delta) && !empty($data['content'])) {
+		if (!is_array($data['content'])) {
+			// adjust this to be an array
+			$data['content'] = array(
+				'nivo-slider' => array(
+					'#markup' => $data['content'],
+				),
+			);
+		}
+		$data['content']['#contextual_links']['julio_slideshow'] = array('node', array($block->delta));
+	}
+}
+
+/**
+ * Implementation of hook_contextual_links_view_alter().
+ */
+function julio_slideshow_contextual_links_view_alter(&$element, $items) {
+  // TODO: We can't just just hook_contextual_links_view_alter() or hook_menu_contextual_links_alter()
+  // review if it makes sense to set an entry in menu just for our contextual link.
+  if (isset($element['#element']['#block']) && $element['#element']['#block']->module == 'media_nivo_slider') {
+    $set = FALSE;
+    foreach(array_keys($element['#links']) as $key) {
+      if (strpos($key, 'julio-slideshow') === 0) {
+        unset($element['#links'][$key]);
+        $set = TRUE;
+      }
+    }
+
+    if ($set) {
+      // only set the link if the user could view one of the previous entries.
+      $element['#links']['julio-slideshow-manage'] = array(
+      'title' => t('Add/Edit Slides'),
+      'href' => 'node/' . $element['#element']['#block']->delta,
+      );
+    }
+  }
+}

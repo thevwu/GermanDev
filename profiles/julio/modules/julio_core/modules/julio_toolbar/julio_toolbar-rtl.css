@@ -1,0 +1,41 @@
+
+#juliotoolbar,
+#juliotoolbar * {
+  text-align: right;
+}
+#juliotoolbar ul li {
+  float: right;
+}
+#juliotoolbar ul li a {
+  display: inline-block;
+  float: none;
+  zoom: 1;
+}
+#juliotoolbar div.juliotoolbar-menu {
+  padding: 5px 50px 5px 50px;
+}
+#juliotoolbar-user {
+  float: left;
+}
+#juliotoolbar ul#juliotoolbar-user li {
+  float: none;
+  display: inline;
+}
+#juliotoolbar-menu {
+  float: none;
+}
+#juliotoolbar-home {
+  float: right;
+}
+#juliotoolbar ul li.home a {
+  position: absolute;
+  right: 10px;
+}
+#juliotoolbar div.juliotoolbar-menu a.toggle {
+  left: 10px;
+  right: auto;
+}
+* html #juliotoolbar {
+  left: 0;
+  padding-left: 0;
+}

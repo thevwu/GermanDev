@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Clubs Announcements feature.
+ */
+
+include_once 'julio_clubs_announcements.features.inc';

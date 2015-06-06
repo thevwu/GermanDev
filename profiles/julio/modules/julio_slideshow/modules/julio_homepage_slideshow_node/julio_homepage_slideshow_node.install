@@ -1,0 +1,188 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function julio_homepage_slideshow_node_install() {
+  // Add an admissions node of type julio_administrative_unit
+  $node = new stdClass;
+  $node->type = 'media_gallery';
+
+  node_object_prepare($node);
+
+  $node->title = st('Homepage Slideshow');
+  $node->language = LANGUAGE_NONE;
+  $node->path = array(
+    'pathauto' => FALSE,
+    'alias' => 'slideshow',
+  );
+
+  $node->media_gallery_description[LANGUAGE_NONE][0] = array(
+    'value' => st('Images for the Homepage Slideshow'),
+    'format' => 'filtered_html',
+  );
+
+  $slides = julio_homepage_slideshow_node_create_slides();
+  if (!empty($slides)) {
+    foreach($slides as $slide) {
+      $node->media_gallery_media[LANGUAGE_NONE][] = (array)$slide;
+    }
+  }
+
+  // nivo slider settings
+  $settings = array(
+    "transition" => "random",
+    "transition_speed" => 500,
+    "pause_length" => 4000,
+    "slices" => 15,
+    "box_columns" => 8,
+    "box_rows" => 4,
+    "start_slide" => 0,
+    "random_start" => 0,
+    "pause_slideshow" => 0,
+    "image_style" => "julio_slideshow",
+    "slider_theme" => "default",
+    "ribbon" => 0,
+    "caption_opacity" => 0.8,
+    "direction_nav" => 1,
+    "direction_nav_hide" => 1,
+    "direction_nav_prev_txt" => "Prev",
+    "direction_nav_next_txt" => "Next",
+    "control_nav" => 1,
+    "control_nav_thumbs" => 0,
+    "control_nav_rel" => 0,
+    "control_nav_search" => ".jpg",
+    "control_nav_replace" => "_thumb.jpg",
+    "keyboard_nav" => 1,
+    "manual_advance" => 0,
+    "before_change" => '',
+    "after_change" => '',
+    "slideshow_end" => '',
+    "last_slide" => '',
+    "after_load" => '',
+  );
+
+  // Build the DB record to be saved/updated.
+  $record = array(
+    'name' => t('Julio Slideshow'),
+    'settings' => $settings,
+  );
+
+  drupal_write_record('media_nivo_slider', $record);
+
+  $node->media_nivo_slider_block[LANGUAGE_NONE][0]['value'] = 1;
+  $node->media_nivo_slider_config[LANGUAGE_NONE][0]['value'] = $record['cid'];
+
+  node_save($node);
+  variable_set('julio_homepage_slideshow_node_nid', $node->nid);
+  variable_set('julio_slideshow_config', $record['cid']);
+
+  $menu_link = array(
+    'menu_name' => 'menu-julio-admin-quick-links',
+    'link_path' => 'node/' . $node->nid,
+    'router_path' => 'node/%',
+    'link_title' => st('Homepage Slideshow'),
+    'options' => array(
+      'attributes' => array('title' => st('Manage the homepage slideshow')),
+    ),
+  );
+  menu_link_save($menu_link);
+  variable_set('julio_homepage_slideshow_mlid', $menu_link['mlid']);
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function julio_homepage_slideshow_node_uninstall() {
+  $nid = variable_get('julio_homepage_slideshow_node_nid', 0);
+  if (!empty($nid)) {
+    node_delete($nid);
+  }
+  variable_del('julio_homepage_slideshow_node_nid');
+
+  $mlid = variable_get('julio_homepage_slideshow_mlid', 0);
+  if (!empty($mlid)) {
+    menu_link_delete($mlid);
+  }
+  variable_del('julio_homepage_slideshow_mlid');
+
+  $fids = variable_get('julio_homepage_slideshow_node_fids', array());
+  if (!empty($fids)) {
+    $files = file_load_multiple($fids);
+    if (!empty($files)) {
+      foreach($files as $file) {
+        file_delete($file);
+      }
+    }
+  }
+  variable_del('julio_homepage_slideshow_node_fids');
+
+  $cid = variable_get('julio_slideshow_config', 0);
+  if (!empty($cid)) {
+    db_delete('media_nivo_slider')
+      ->condition('cid', $cid)
+      ->execute();
+  }
+  variable_del('julio_slideshow_config');
+}
+
+/**
+ * Helper function to add example slides
+ */
+function julio_homepage_slideshow_node_create_slides() {
+  // example slides
+
+  $images = array(
+    0 => array(
+      'filename' => '/images/textbooks.jpg',
+      'drupaluri' => 'public://textbooks.jpg',
+      'title' => 'Textbooks',
+      'caption' => '<h2>Example Slideshow Image</h2><p>This is a basic example slideshow image. Click the "Manage Slideshow" contextual link change slideshow images.</p><p>Image Credit: Andy Mangold shared under the <a href="http://creativecommons.org/licenses/by/2.0/">CC attribution license</a>.</p>',
+      'license' => 'cc',
+    ),
+    1 => array(
+      'filename' => '/images/flower.jpg',
+      'drupaluri' => 'public://flower.jpg',
+      'title' => 'Botany Club',
+      'caption' => '<h2>Botany Club Garden Hike</h2><p>Example picture. Click the "Add/Edit Slides" contextual link change slideshow images.</p><p>Image Credit: ~ therealme ~ shared under the <a href="http://creativecommons.org/licenses/by/2.0/">CC attribution license</a>.</p>',
+      'license' => 'cc',
+    ),
+    2 => array(
+      'filename' => '/images/chess.jpg',
+      'drupaluri' => 'public://chess.jpg',
+      'title' => 'Chess Club',
+      'caption' => '<h2>Chess Club</h2><p>Chess club meets every Thursday. Click the "Add/Edit Slides" contextual link change slideshow images.</p><p>Image Credit: Muffet shared under the <a href="http://creativecommons.org/licenses/by/2.0/">CC attribution license</a>.</p>',
+      'license' => 'cc',
+    ),
+  );
+
+  $files = array();
+  $fids = array();
+  foreach ($images as $image) {
+    $fcontents = file_get_contents(dirname(__FILE__) . $image['filename']);
+    $image['description'] = $image['caption'];
+    $file = file_save_data($fcontents, $image['drupaluri'], FILE_EXISTS_REPLACE);
+    $file = file_load($file->fid);
+    $file->media_description[LANGUAGE_NONE][0] = array(
+      'value' => $image['description'],
+      'format' => 'filtered_html',
+    );
+    $file->media_title[LANGUAGE_NONE][0] = array(
+      'value' => $image['title'],
+      'format' => 'filtered_html',
+    );
+    $file->media_nivo_slider_image_caption[LANGUAGE_NONE][0] = array(
+      'value' => $image['caption'],
+      'format' => 'filtered_html',
+    );
+
+    $file->field_license[LANGUAGE_NONE][0]['value'] = $image['license'];
+    file_save($file);
+    $files[] = $file;
+    $fids[] = $file->fid;
+  }
+
+  // so we know what files to remove
+  variable_set('julio_homepage_slideshow_node_fids', $fids);
+  return $files;
+}

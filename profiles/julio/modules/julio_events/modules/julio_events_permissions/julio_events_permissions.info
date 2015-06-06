@@ -1,0 +1,21 @@
+name = Events Permissions
+description = Event permissions
+core = 7.x
+package = Julio: Events
+php = 5.2.4
+project = julio
+dependencies[] = features
+dependencies[] = julio_events
+features[features_api][] = api:1
+features[user_permission][] = create julio_event content
+features[user_permission][] = delete any julio_event content
+features[user_permission][] = delete own julio_event content
+features[user_permission][] = edit any julio_event content
+features[user_permission][] = edit own julio_event content
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

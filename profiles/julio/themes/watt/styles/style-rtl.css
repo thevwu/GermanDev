@@ -1,0 +1,46 @@
+
+.region-content-wrapper,
+.region-sidebar-first,
+.region-sidebar-second {
+  float: right;
+}
+
+.region-content-wrapper,
+.region-sidebar-first,
+.region-sidebar-second {
+  margin-left: 0 !important;
+}
+.one-sidebar .region-sidebar-first {
+  margin-right: -64em;
+}
+.sidebar-first .region-content-wrapper,
+.two-sidebars .region-content-wrapper {
+  margin-right: 16em;
+}
+.two-sidebars .region-sidebar-first {
+  margin-right: -48em;
+}
+
+.sidebar-second .region-sidebar-second,
+.two-sidebars .region-sidebar-second,
+.one-sidebar .region-sidebar-second {
+  margin-right: 2em;
+}
+
+.site-branding {
+  float: right;
+  margin-left: 1em;
+  margin-right: 0;
+}
+.site-navigation {
+  float: left;
+}
+.region-header {
+  clear: left;
+  float: left;
+}
+.site-id .logo {
+  float: right;
+  margin-left: .25em;
+  margin-right: 0;
+}

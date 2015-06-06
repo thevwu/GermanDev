@@ -1,0 +1,33 @@
+name = Gallery
+description = Media gallery settings
+core = 7.x
+package = Julio: Gallery
+php = 5.2.4
+project = julio
+dependencies[] = entityreference
+dependencies[] = entityreference_prepopulate
+dependencies[] = features
+dependencies[] = image
+dependencies[] = julio_core
+dependencies[] = julio_groups
+dependencies[] = media_gallery
+dependencies[] = og
+dependencies[] = og_ui
+dependencies[] = plupload
+dependencies[] = strongarm
+datestamp = 1330733980
+features[ctools][] = strongarm:strongarm:1
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:1
+features[field][] = node-media_gallery-julio_og_group_ref
+features[image][] = julio_featured_image_group
+features[menu_links][] = menu-julio-new-content:node/add/media-gallery
+features[variable][] = comment_media_gallery
+features[views_view][] = julio_group_images
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

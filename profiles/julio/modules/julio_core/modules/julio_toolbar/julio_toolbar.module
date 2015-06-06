@@ -1,0 +1,341 @@
+<?php
+
+/**
+ * @file
+ * Julio administration toolbar for quick access to top level administration items.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function julio_toolbar_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#julio_toolbar':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Julio Toolbar module displays links to Julio\'s administrative panel, as well as providing the Julio Toolbar menu at the top of the screen') . '</p>';
+      $output .= '<h3>' . t('Uses') . '</h3>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t('Displaying administrative links') . '</dt>';
+      $output .= '<dd>' . t('The Toolbar module displays a bar containing top-level administrative links across the top of the screen. Below that, the Toolbar module has a <em>drawer</em> section where context specific links are displayed. The drawer can be hidden/shown by using the show/hide shortcuts link at the end of the julio_toolbar.') . '</dd>';
+      $output .= '</dl>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function julio_toolbar_permission() {
+  return array(
+    'access julio_toolbar' => array(
+      'title' => t('Use the administration toolbar'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_theme().
+ */
+function julio_toolbar_theme($existing, $type, $theme, $path) {
+  $items['julio_toolbar'] = array(
+    'render element' => 'julio_toolbar',
+    'template' => 'julio_toolbar',
+    'path' => drupal_get_path('module', 'julio_toolbar'),
+  );
+  $items['julio_toolbar_toggle'] = array(
+    'variables' => array(
+      'collapsed' => NULL,
+      'attributes' => array(),
+    ),
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function julio_toolbar_menu() {
+  $items['julio_toolbar/toggle'] = array(
+    'title' => 'Toggle drawer visibility',
+    'type' => MENU_CALLBACK,
+    'page callback' => 'julio_toolbar_toggle_page',
+    'access arguments' => array('access julio_toolbar'),
+  );
+  return $items;
+}
+
+/**
+ * Menu callback; toggles the visibility of the toolbar drawer.
+ */
+function julio_toolbar_toggle_page() {
+  global $base_path;
+  // Toggle the value in the cookie.
+  setcookie('Drupal.juliotoolbar.collapsed', !_julio_toolbar_is_collapsed(), NULL, $base_path);
+  // Redirect the user from where he used the toggle element.
+  drupal_goto();
+}
+
+/**
+ * Formats an element used to toggle the toolbar drawer's visibility.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - collapsed: A boolean value representing the toolbar drawer's visibility.
+ *   - attributes: An associative array of HTML attributes.
+ * @return
+ *   An HTML string representing the element for toggling.
+ *
+ * @ingroup themable
+ */
+function theme_julio_toolbar_toggle($variables) {
+  if ($variables['collapsed']) {
+    $toggle_text = t('Show shortcuts');
+  }
+  else {
+    $toggle_text = t('Hide shortcuts');
+    $variables['attributes']['class'][] = 'toggle-active';
+  }
+  return l($toggle_text, 'julio_toolbar/toggle', array('query' => drupal_get_destination(), 'attributes' => array('title' => $toggle_text) + $variables['attributes']));
+}
+
+/**
+ * Determines the current state of the toolbar drawer's visibility.
+ *
+ * @return
+ *   TRUE when drawer is collapsed, FALSE when it is expanded.
+ */
+function _julio_toolbar_is_collapsed() {
+  // PHP converts dots into underscores in cookie names to avoid problems with
+  // its parser, so we use a converted cookie name.
+  return isset($_COOKIE['Drupal.juliotoolbar_collapsed']) ? $_COOKIE['Drupal.juliotoolbar_collapsed'] : 0;
+}
+
+/**
+ * Implements hook_page_build().
+ *
+ * Add admin toolbar to the page_top region automatically.
+ */
+function julio_toolbar_page_build(&$page) {
+  $page['page_top']['julio_toolbar'] = array(
+    '#pre_render' => array('julio_toolbar_pre_render'),
+    '#access' => user_access('access julio_toolbar'),
+    'julio_toolbar_drawer' => array(),
+  );
+}
+
+/**
+ * Prerender function for the toolbar.
+ *
+ * Since building the toolbar takes some time, it is done just prior to
+ * rendering to ensure that it is built only if it will be displayed.
+ */
+function julio_toolbar_pre_render($julio_toolbar) {
+  $julio_toolbar = array_merge($julio_toolbar, julio_toolbar_view());
+  return $julio_toolbar;
+}
+
+/**
+ * Implements hook_preprocess_html().
+ *
+ * Add some page classes, so global page theming can adjust to the toolbar.
+ */
+function julio_toolbar_preprocess_html(&$vars) {
+  if (isset($vars['page']['page_top']['julio_toolbar']) && user_access('access julio_toolbar')) {
+    $vars['classes_array'][] = 'julio_toolbar';
+    if (!_julio_toolbar_is_collapsed()) {
+      $vars['classes_array'][] = 'julio_toolbar-drawer';
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_julio_toolbar().
+ *
+ * Adding the 'overlay-displace-top' class to the toolbar pushes the overlay
+ * down, so it appears below the toolbar.
+ */
+function julio_toolbar_preprocess_julio_toolbar(&$variables) {
+  $variables['classes_array'][] = "overlay-displace-top";
+}
+
+/**
+ * Implements hook_system_info_alter().
+ *
+ * Indicate that the 'page_top' region (in which the toolbar will be displayed)
+ * is an overlay supplemental region that should be refreshed whenever its
+ * content is updated.
+ *
+ * This information is provided for any module that might need to use it, not
+ * just the core Overlay module.
+ */
+function julio_toolbar_system_info_alter(&$info, $file, $type) {
+  if ($type == 'theme') {
+    $info['overlay_supplemental_regions'][] = 'page_top';
+  }
+}
+
+/**
+ * Build the admin menu as a structured array ready for drupal_render().
+ */
+function julio_toolbar_view() {
+  global $user;
+
+  $module_path = drupal_get_path('module', 'julio_toolbar');
+  $build = array(
+    '#theme' => 'julio_toolbar',
+    '#attached'=> array(
+      'js' => array(
+        $module_path . '/julio_toolbar.js',
+        array(
+          'data' => array('tableHeaderOffset' => 'Drupal.juliotoolbar.height'),
+          'type' => 'setting'
+        ),
+      ),
+      'css' => array(
+        $module_path . '/julio_toolbar.css',
+      ),
+      'library' => array(array('system', 'jquery.cookie')),
+    ),
+  );
+
+  $links = julio_toolbar_menu_navigation_links(menu_build_tree('menu-julio-toolbar'));
+  $build['julio_toolbar_menu'] = array(
+    '#theme' => 'links__julio_toolbar_menu',
+    '#links' => $links,
+    '#attributes' => array('id' => 'juliotoolbar-menu'),
+    '#heading' => array('text' => t('Administrative toolbar'), 'level' => 'h2', 'class' => 'element-invisible'),
+  );
+
+  // Add logout & user account links or login link.
+  if ($user->uid) {
+    $links = array(
+      'account' => array(
+        'title' => t('Hello <strong>@username</strong>', array('@username' => format_username($user))),
+        'href' => 'user',
+        'html' => TRUE,
+        'attributes' => array('title' => t('User account')),
+      ),
+      'logout' => array(
+        'title' => t('Log out'),
+        'href' => 'user/logout',
+      ),
+    );
+  }
+  else {
+     $links = array(
+      'login' => array(
+        'title' => t('Log in'),
+        'href' => 'user',
+      ),
+    );
+  }
+  $build['julio_toolbar_user'] = array(
+    '#theme' => 'links__julio_toolbar_user',
+    '#links' => $links,
+    '#attributes' => array('id' => 'juliotoolbar-user'),
+  );
+
+  // Add a "home" link.
+  $link = array(
+    'home' => array(
+      'title' => '<span class="home-link">Home</span>',
+      'href' => '<front>',
+      'html' => TRUE,
+      'attributes' => array('title' => t('Home')),
+    ),
+  );
+  $build['julio_toolbar_home'] = array(
+    '#theme' => 'links',
+    '#links' => $link,
+    '#attributes' => array('id' => 'juliotoolbar-home'),
+  );
+
+  // Add an anchor to be able to toggle the visibility of the drawer.
+  $build['julio_toolbar_toggle'] = array(
+    '#theme' => 'julio_toolbar_toggle',
+    '#collapsed' => _julio_toolbar_is_collapsed(),
+    '#attributes' => array('class' => array('toggle')),
+  );
+
+  // Prepare the drawer links CSS classes.
+  $julio_toolbar_drawer_classes = array(
+    'juliotoolbar-drawer',
+    'clearfix',
+  );
+  if(_julio_toolbar_is_collapsed()) {
+    $julio_toolbar_drawer_classes[] = 'collapsed';
+  }
+  $build['julio_toolbar_drawer_classes'] = implode(' ', $julio_toolbar_drawer_classes);
+
+  // render toolbar drawer
+  $block = module_invoke('julio_core', 'block_view', 'group-content-links');
+
+  $build['julio_toolbar_drawer'] = array(
+    '#markup' => $block['content'],
+    '#attributes' => array('id' => 'juliotoolbar-content-links'),
+  );
+
+
+  return $build;
+}
+
+/**
+ * Generate a links array from a menu tree array.
+ *
+ * Based on menu_navigation_links(). Adds path based IDs and icon placeholders
+ * to the links.
+ */
+function julio_toolbar_menu_navigation_links($tree) {
+  $links = array();
+  foreach ($tree as $item) {
+    if (!$item['link']['hidden'] && $item['link']['access']) {
+      // Make sure we have a path specific ID in place, so we can attach icons
+      // and behaviors to the items.
+      $id = str_replace(array('/', '<', '>'), array('-', '', ''), $item['link']['href']);
+
+      $link = $item['link']['localized_options'];
+      $link['href'] = $item['link']['href'];
+      // Add icon placeholder.
+      $link['title'] = '<span class="icon"></span>' . check_plain($item['link']['title']);
+      // Add admin link ID.
+      $link['attributes'] = array('id' => 'julio_toolbar-link-' . $id);
+      if (!empty($item['link']['description'])) {
+        $link['title'] .= ' <span class="element-invisible">(' . $item['link']['description'] . ')</span>';
+        $link['attributes']['title'] = $item['link']['description'];
+      }
+      $link['html'] = TRUE;
+
+      $class = ' path-' . $id;
+      if (julio_toolbar_in_active_trail($item['link']['href'])) {
+        $class .= ' active-trail';
+      }
+      $links['menu-' . $item['link']['mlid'] . $class] = $link;
+    }
+  }
+  return $links;
+}
+
+/**
+ * Checks whether an item is in the active trail.
+ *
+ * Useful when using a menu generated by menu_tree_all_data() which does
+ * not set the 'in_active_trail' flag on items.
+ *
+ * @todo
+ *   Look at migrating to a menu system level function.
+ */
+function julio_toolbar_in_active_trail($path) {
+  $active_paths = &drupal_static(__FUNCTION__);
+
+  // Gather active paths.
+  if (!isset($active_paths)) {
+    $active_paths = array();
+    $trail = menu_get_active_trail();
+    foreach ($trail as $item) {
+      if (!empty($item['href'])) {
+        $active_paths[] = $item['href'];
+      }
+    }
+  }
+  return in_array($path, $active_paths);
+}

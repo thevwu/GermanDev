@@ -1,0 +1,38 @@
+name = Clubs Permissions
+description = School Clubs and Organizations Permissions
+core = 7.x
+package = Julio: Clubs
+php = 5.2.4
+project = julio
+dependencies[] = features
+dependencies[] = julio_clubs
+dependencies[] = og_menu
+features[features_api][] = api:1
+features[og_features_permission][] = node:julio_club:add user
+features[og_features_permission][] = node:julio_club:administer group
+features[og_features_permission][] = node:julio_club:administer og menu
+features[og_features_permission][] = node:julio_club:approve and deny subscription
+features[og_features_permission][] = node:julio_club:create julio_group_post content
+features[og_features_permission][] = node:julio_club:delete any julio_group_post content
+features[og_features_permission][] = node:julio_club:delete own julio_group_post content
+features[og_features_permission][] = node:julio_club:manage members
+features[og_features_permission][] = node:julio_club:manage permissions
+features[og_features_permission][] = node:julio_club:manage roles
+features[og_features_permission][] = node:julio_club:subscribe
+features[og_features_permission][] = node:julio_club:subscribe without approval
+features[og_features_permission][] = node:julio_club:unsubscribe
+features[og_features_permission][] = node:julio_club:update any julio_group_post content
+features[og_features_permission][] = node:julio_club:update group
+features[og_features_permission][] = node:julio_club:update own julio_group_post content
+features[user_permission][] = create julio_club content
+features[user_permission][] = delete any julio_club content
+features[user_permission][] = delete own julio_club content
+features[user_permission][] = edit any julio_club content
+features[user_permission][] = edit own julio_club content
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

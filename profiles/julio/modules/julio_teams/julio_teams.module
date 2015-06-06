@@ -1,0 +1,19 @@
+<?php
+/**
+ * @file
+ * Code for the Teams feature.
+ */
+
+include_once('julio_teams.features.inc');
+
+/**
+ * Implements hook_block_view_alter().
+ *
+ * Can't use hook_block_view_MODULE_DELTA_alter because delta has '-'
+ * http://drupal.org/node/1076132
+ */
+function julio_teams_block_view_alter(&$data, $block) {
+  if ($block->module == 'menu' && $block->delta == 'menu-julio-teams-menu') {
+    $data['subject'] = '';
+  }
+}

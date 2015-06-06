@@ -1,0 +1,38 @@
+name = Administrative Unit Permissions
+description = Administrative Units permissions
+core = 7.x
+package = Julio: Administrative Unit
+php = 5.2.4
+project = julio
+dependencies[] = features
+dependencies[] = julio_administrative_unit
+dependencies[] = og_menu
+features[features_api][] = api:1
+features[og_features_permission][] = node:julio_administrative_unit:add user
+features[og_features_permission][] = node:julio_administrative_unit:administer group
+features[og_features_permission][] = node:julio_administrative_unit:administer og menu
+features[og_features_permission][] = node:julio_administrative_unit:approve and deny subscription
+features[og_features_permission][] = node:julio_administrative_unit:create julio_group_post content
+features[og_features_permission][] = node:julio_administrative_unit:delete any julio_group_post content
+features[og_features_permission][] = node:julio_administrative_unit:delete own julio_group_post content
+features[og_features_permission][] = node:julio_administrative_unit:manage members
+features[og_features_permission][] = node:julio_administrative_unit:manage permissions
+features[og_features_permission][] = node:julio_administrative_unit:manage roles
+features[og_features_permission][] = node:julio_administrative_unit:subscribe
+features[og_features_permission][] = node:julio_administrative_unit:subscribe without approval
+features[og_features_permission][] = node:julio_administrative_unit:unsubscribe
+features[og_features_permission][] = node:julio_administrative_unit:update any julio_group_post content
+features[og_features_permission][] = node:julio_administrative_unit:update group
+features[og_features_permission][] = node:julio_administrative_unit:update own julio_group_post content
+features[user_permission][] = create julio_administrative_unit content
+features[user_permission][] = delete any julio_administrative_unit content
+features[user_permission][] = delete own julio_administrative_unit content
+features[user_permission][] = edit any julio_administrative_unit content
+features[user_permission][] = edit own julio_administrative_unit content
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

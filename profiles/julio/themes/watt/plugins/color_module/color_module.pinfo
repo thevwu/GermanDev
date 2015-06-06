@@ -1,0 +1,12 @@
+name = Color Module Compatibility
+description = An example plug-in.
+
+; The hex api version. This is required.
+
+hexapi = 2.x
+
+protected = false
+
+auto enable = false
+
+feature set[color_module] = Color me! (color plug-in)

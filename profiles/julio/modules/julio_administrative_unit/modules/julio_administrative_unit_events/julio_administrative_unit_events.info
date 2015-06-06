@@ -1,0 +1,22 @@
+name = Administrative Unit Events
+description = Meta feature, requires julio_administrative_unit and julio_events
+core = 7.x
+package = Julio: Administrative Unit
+php = 5.2.4
+dependencies[] = features
+dependencies[] = julio_administrative_unit
+dependencies[] = julio_events
+dependencies[] = og
+features[features_api][] = api:1
+features[og_features_permission][] = node:julio_administrative_unit:create julio_event content
+features[og_features_permission][] = node:julio_administrative_unit:delete any julio_event content
+features[og_features_permission][] = node:julio_administrative_unit:delete own julio_event content
+features[og_features_permission][] = node:julio_administrative_unit:update any julio_event content
+features[og_features_permission][] = node:julio_administrative_unit:update own julio_event content
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

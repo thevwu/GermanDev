@@ -1,0 +1,44 @@
+<?php
+
+include_once('julio_groups.features.inc');
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function julio_groups_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'og_ui_add_users') {
+    // hide membership field setting by forcing
+    if (isset($form['og_user']['field_name'])) {
+      $form['og_user']['field_name'] = array(
+        '#type' => 'value',
+        '#value' => 'julio_og_user_group_ref',
+      );
+    }
+
+    // in this site build there is no sense in pending or blocked memberships
+    if (isset($form['og_user']['state'])) {
+      $form['og_user']['state'] = array(
+        '#type' => 'value',
+        '#value' => OG_STATE_ACTIVE,
+      );
+    }
+
+    // field widgets need to be altered after the form is fully build
+    foreach(element_children($form['membership_fields']) as $child) {
+      $form['membership_fields'][$child]['#after_build'][] = 'julio_groups_form_alter_after_build';
+    }
+  }
+}
+
+/**
+ * After build function to hide the membership request message
+ */
+function julio_groups_form_alter_after_build($element, &$form_state) {
+  foreach (element_children($element) as $lang) {
+    foreach (element_children($element[$lang]) as $index) {
+      foreach (element_children($element[$lang][$index]) as $field) {
+        $element[$lang][$index][$field]['#type'] = 'value';
+      }
+    }
+  }
+}

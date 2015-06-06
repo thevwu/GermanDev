@@ -1,0 +1,21 @@
+name = Slideshow UI
+description = Context for the homepage slideshow
+core = 7.x
+package = Julio: Core
+php = 5.2.4
+version = 7.x-1.0-alpha1
+project = julio_slideshow_ui
+dependencies[] = context
+dependencies[] = ctools
+dependencies[] = julio_slideshow
+dependencies[] = media_nivo_slider
+features[context][] = julio_homepage_slideshow
+features[ctools][] = context:context:3
+features[features_api][] = api:1
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

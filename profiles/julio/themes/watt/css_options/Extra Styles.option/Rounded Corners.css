@@ -1,0 +1,35 @@
+.front .region-content .node,
+.region-sidebar-first .block,
+.region-sidebar-second .block,
+#site-footer,
+.region-sidebar-first .block .view .item-list ul li a.active,
+.region-sidebar-first .block .view .item-list ul li a:hover,
+.triptych-wrapper .block .view .item-list ul li a.active,
+.triptych-wrapper .block .view .item-list ul li a:hover,
+ul.quicktabs-tabs li a:hover,
+ul.quicktabs-tabs li.active a.active,
+input.form-text {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.header-wrapper,
+ul.main-menu li a:hover,
+ul.main-menu li a.active {
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-radius: 5px 5px 0 0;
+  o-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+}
+ul.main-menu li {
+  border-right: none;
+}
+
+#page-main {
+  -moz-border-radius: 0 0 5px 5px;
+  -webkit-border-radius: 0 0 5px 5px;
+  -o-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+}

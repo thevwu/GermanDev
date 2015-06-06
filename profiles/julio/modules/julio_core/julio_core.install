@@ -1,0 +1,60 @@
+<?php
+/*
+ * @file Creates/Deletes Home Page, and Contact nodes on enable/uninstall.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function julio_core_install() {
+  // disable flag_bookmarks_tab view
+  $views_status = variable_get('views_defaults', array());
+  $views_status['flag_bookmarks_tab'] = TRUE; // TRUE means disable
+  variable_set('views_defaults', $views_status);
+  views_invalidate_cache();
+
+  // add homepage and contact nodes
+  $nodes = array(
+    'julio_homepage_nid' => array(
+      'alias' => 'home',
+      'title' => st('Home Page'),
+      'body' => 'Default Homepage',
+    ),
+    'julio_contact_nid' => array(
+      'alias' => 'contact',
+      'title' => st('Contact'),
+      'body' => 'Add you contact information here',
+    ),
+  );
+
+  foreach ($nodes as $var => $values) {
+    $node = new stdClass;
+    $node->type = 'julio_page';
+
+    node_object_prepare($node);
+    $node->title = $values['title'];
+    $node->language = LANGUAGE_NONE;
+    $node->path = array('alias' => $values['alias']);
+    $node->promote = 0;
+    $node->body[$node->language][0]['value']   = $values['body'];
+    $node->body[$node->language][0]['summary'] = text_summary($values['body']);
+    $node->body[$node->language][0]['format'] = 'filtered_html'; // 'filtered_html' or 'plain_text'
+    node_save($node);
+    variable_set($var, $node->nid);
+  }
+
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function julio_core_uninstall() {
+  $nodes = array('julio_homepage_nid', 'julio_contact_nid');
+  foreach ($nodes as $var) {
+    $nid = variable_get($var, 0);
+    if (!empty($nid)) {
+      node_delete($nid);
+    }
+    variable_del($var);
+  }
+}

@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * Implements hook_block_alter().
+ */
+function julio_homepage_slideshow_node_block_view_alter(&$data, $block) {
+  $nid = variable_get('julio_homepage_slideshow_node_nid', 0);
+  if (!empty($nid)) {
+    // set the block title to '' for the media_nivo_slider block for our nid
+    if ($block->module == 'media_nivo_slider' && $block->delta == $nid) {
+      $data['subject'] = '';
+    }
+  }
+}

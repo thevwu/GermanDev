@@ -1,0 +1,23 @@
+name = Gallery UI
+description = Gallery UI
+core = 7.x
+package = Julio: Gallery
+php = 5.2.4
+project = julio
+dependencies[] = context
+dependencies[] = julio_core
+dependencies[] = julio_gallery
+dependencies[] = views
+datestamp = 1330733980
+features[context][] = julio_all_images
+features[context][] = julio_featured_images
+features[ctools][] = context:context:3
+features[features_api][] = api:1
+features[menu_links][] = menu-julio-admin-quick-links:admin/content/media/thumbnails
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

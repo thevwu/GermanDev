@@ -1,0 +1,255 @@
+name = Julio
+description = Your school's new website.
+core = 7.x
+project = "julio"
+
+depencencies[] = og_menu
+dependencies[] = block
+dependencies[] = color
+dependencies[] = colorbox
+dependencies[] = context
+dependencies[] = context_layouts
+dependencies[] = context_og
+dependencies[] = contextual
+dependencies[] = css_options
+dependencies[] = ctools
+dependencies[] = dashboard
+dependencies[] = date_api
+dependencies[] = date_popup
+dependencies[] = date_views
+dependencies[] = diff
+dependencies[] = dblog
+dependencies[] = entity
+dependencies[] = feature_set
+dependencies[] = features
+dependencies[] = file
+dependencies[] = flag
+dependencies[] = help
+dependencies[] = image
+dependencies[] = image_resize_filter
+dependencies[] = insert
+dependencies[] = julio_administrative_unit
+dependencies[] = julio_administrative_unit_permissions
+dependencies[] = julio_core
+dependencies[] = julio_core_permissions
+dependencies[] = julio_core_ui
+dependencies[] = julio_groups
+dependencies[] = julio_groups_ui
+dependencies[] = julio_toolbar
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = multiform
+dependencies[] = node_reference
+dependencies[] = number
+dependencies[] = og
+dependencies[] = og_ui
+dependencies[] = options
+dependencies[] = path
+dependencies[] = pathauto
+dependencies[] = rdf
+dependencies[] = references
+dependencies[] = search
+dependencies[] = strongarm
+dependencies[] = token
+dependencies[] = transliteration
+dependencies[] = views
+dependencies[] = wysiwyg
+files[] = julio.profile
+
+; Feature Sets
+feature_sets[julio_admissions][title] = 'Admissions'
+feature_sets[julio_admissions][description] = 'Adds a top-level user group for Admissions related content.'
+feature_sets[julio_admissions][icon] = 'feature_set_icons/admissions.png'
+feature_sets[julio_admissions][enable][] = julio_admissions_node
+feature_sets[julio_admissions][disable][] = julio_admissions_node
+feature_sets[julio_admissions][uninstall][] = julio_admissions_node
+
+feature_sets[julio_announcements][title] = 'Announcements'
+feature_sets[julio_announcements][description] = 'Add announcements and news items to your website.'
+feature_sets[julio_announcements][icon] = 'feature_set_icons/announcements.png'
+feature_sets[julio_announcements][enable][] = julio_announcements
+feature_sets[julio_announcements][enable][] = julio_announcements_permissions
+feature_sets[julio_announcements][enable][] = julio_announcements_ui
+feature_sets[julio_announcements][enable][] = julio_administrative_unit_announcements
+feature_sets[julio_announcements][disable][] = julio_announcements
+feature_sets[julio_announcements][disable][] = julio_announcements_permissions
+feature_sets[julio_announcements][disable][] = julio_announcements_ui
+feature_sets[julio_announcements][disable][] = julio_administrative_unit_announcements
+
+feature_sets[julio_teams][title] = 'Athletic Teams'
+feature_sets[julio_teams][description] = 'Add athletic teams such as Soccer and Basketball; requires Calendar and Events for sports calendars.'
+feature_sets[julio_teams][icon] = 'feature_set_icons/teams.png'
+feature_sets[julio_teams][enable][] = julio_teams
+feature_sets[julio_teams][enable][] = julio_teams_permissions
+feature_sets[julio_teams][enable][] = julio_teams_node
+feature_sets[julio_teams][enable][] = julio_teams_ui
+feature_sets[julio_teams][disable][] = julio_teams
+feature_sets[julio_teams][disable][] = julio_teams_permissions
+feature_sets[julio_teams][disable][] = julio_teams_node
+feature_sets[julio_teams][disable][] = julio_teams_ui
+feature_sets[julio_teams][uninstall][] = julio_teams_node
+feature_sets[julio_teams][uninstall][] = julio_teams_ui
+
+feature_sets[julio_events][title] = 'Calendar and Events'
+feature_sets[julio_events][description] = 'Adds calendars and events to your website.'
+feature_sets[julio_events][icon] = 'feature_set_icons/events.png'
+feature_sets[julio_events][enable][] = julio_events
+feature_sets[julio_events][enable][] = julio_events_permissions
+feature_sets[julio_events][enable][] = julio_events_ui
+feature_sets[julio_events][enable][] = julio_administrative_unit_events
+feature_sets[julio_events][enable][] = fullcalendar
+feature_sets[julio_events][enable][] = fullcalendar_options
+feature_sets[julio_events][enable][] = date
+feature_sets[julio_events][disable][] = julio_events
+feature_sets[julio_events][disable][] = julio_events_permissions
+feature_sets[julio_events][disable][] = julio_events_ui
+feature_sets[julio_events][disable][] = julio_administrative_unit_events
+feature_sets[julio_events][disable][] = fullcalendar
+feature_sets[julio_events][disable][] = fullcalendar_options
+feature_sets[julio_events][disable][] = date
+feature_sets[julio_events][uninstall][] = julio_events_ui
+
+feature_sets[julio_clubs][title] = 'Clubs'
+feature_sets[julio_clubs][description] = 'Add clubs, such as the Chess Club or Model UN, to your website.'
+feature_sets[julio_clubs][icon] = 'feature_set_icons/clubs.png'
+feature_sets[julio_clubs][enable][] = julio_clubs
+feature_sets[julio_clubs][enable][] = julio_clubs_ui
+feature_sets[julio_clubs][enable][] = julio_clubs_node
+feature_sets[julio_clubs][enable][] = julio_clubs_permissions
+feature_sets[julio_clubs][disable][] = julio_clubs
+feature_sets[julio_clubs][disable][] = julio_clubs_ui
+feature_sets[julio_clubs][disable][] = julio_clubs_node
+feature_sets[julio_clubs][disable][] = julio_clubs_permissions
+feature_sets[julio_clubs][uninstall][] = julio_clubs_ui
+feature_sets[julio_clubs][uninstall][] = julio_clubs_node
+
+feature_sets[julio_departments][title] = 'Departments'
+feature_sets[julio_departments][description] = 'Add departments, such as the English or Art, to your website.'
+feature_sets[julio_departments][icon] = 'feature_set_icons/departments.png'
+feature_sets[julio_departments][enable][] = julio_departments
+feature_sets[julio_departments][enable][] = julio_departments_permissions
+feature_sets[julio_departments][enable][] = julio_departments_ui
+feature_sets[julio_departments][enable][] = julio_departments_node
+feature_sets[julio_departments][disable][] = julio_departments
+feature_sets[julio_departments][disable][] = julio_departments_permissions
+feature_sets[julio_departments][disable][] = julio_departments_ui
+feature_sets[julio_departments][disable][] = julio_departments_node
+feature_sets[julio_departments][uninstall][] = julio_departments_ui
+feature_sets[julio_departments][uninstall][] = julio_departments_node
+
+feature_sets[julio_gallery][title] = 'Galleries'
+feature_sets[julio_gallery][description] = 'Add photo galleries to your website.'
+feature_sets[julio_gallery][icon] = 'feature_set_icons/gallery.png'
+feature_sets[julio_gallery][enable][] = julio_gallery
+feature_sets[julio_gallery][enable][] = julio_gallery_permissions
+feature_sets[julio_gallery][enable][] = julio_gallery_ui
+feature_sets[julio_gallery][enable][] = julio_administrative_unit_galleries
+feature_sets[julio_gallery][disable][] = julio_gallery
+feature_sets[julio_gallery][disable][] = julio_gallery_permissions
+feature_sets[julio_gallery][enable][] = julio_gallery_ui
+feature_sets[julio_gallery][enable][] = julio_administrative_unit_galleries
+
+feature_sets[julio_guardians][title] = 'Parents and Guardians'
+feature_sets[julio_guardians][description] = 'Adds a top-level user group for Parents and Guardians.'
+feature_sets[julio_guardians][icon] = 'feature_set_icons/guardians.png'
+feature_sets[julio_guardians][enable][] = julio_guardians_node
+feature_sets[julio_guardians][disable][] = julio_guardians_node
+feature_sets[julio_guardians][uninstall][] = julio_guardians_node
+
+feature_sets[julio_slideshow][title] = 'Slideshow'
+feature_sets[julio_slideshow][description] = 'Add a custom slideshow for your homepage.'
+feature_sets[julio_slideshow][icon] = 'feature_set_icons/slideshow.png'
+feature_sets[julio_slideshow][enable][] = julio_slideshow
+feature_sets[julio_slideshow][enable][] = julio_slideshow_ui
+feature_sets[julio_slideshow][enable][] = media_nivo_slider
+feature_sets[julio_slideshow][enable][] = julio_homepage_slideshow_node
+feature_sets[julio_slideshow][disable][] = julio_slideshow
+feature_sets[julio_slideshow][disable][] = julio_slideshow_ui
+feature_sets[julio_slideshow][disable][] = julio_homepage_slideshow_node
+feature_sets[julio_slideshow][uninstall][] = julio_homepage_slideshow_node
+
+feature_sets[julio_staff][title] = 'Staff Directory'
+feature_sets[julio_staff][description] = 'Add a staff directory with faculty and staff bios.'
+feature_sets[julio_staff][icon] = 'feature_set_icons/staff.png'
+feature_sets[julio_staff][enable][] = julio_staff
+feature_sets[julio_staff][disable][] = julio_staff
+
+; Meta (Integration) Feature Sets
+feature_sets[julio_clubs_announcements][title] = 'Meta clubs announcements feature'
+feature_sets[julio_clubs_announcements][dependencies][] = julio_clubs
+feature_sets[julio_clubs_announcements][dependencies][] = julio_announcements
+feature_sets[julio_clubs_announcements][enable][] = julio_clubs_announcements
+feature_sets[julio_clubs_announcements][enable][] = julio_clubs_announcements_ui
+feature_sets[julio_clubs_announcements][disable][] = julio_clubs_announcements
+feature_sets[julio_clubs_announcements][disable][] = julio_clubs_announcements_ui
+feature_sets[julio_clubs_announcements][uninstall][] = julio_clubs_announcements_ui
+
+feature_sets[julio_clubs_events][title] = 'Meta clubs events feature'
+feature_sets[julio_clubs_events][dependencies][] = julio_clubs
+feature_sets[julio_clubs_events][dependencies][] = julio_events
+feature_sets[julio_clubs_events][enable][] = julio_clubs_events
+feature_sets[julio_clubs_events][enable][] = julio_clubs_events_ui
+feature_sets[julio_clubs_events][disable][] = julio_clubs_events
+feature_sets[julio_clubs_events][disable][] = julio_clubs_events_ui
+feature_sets[julio_clubs_events][uninstall][] = julio_clubs_events_ui
+
+feature_sets[julio_clubs_galleries][title] = 'Meta clubs galleries feature'
+feature_sets[julio_clubs_galleries][dependencies][] = julio_clubs
+feature_sets[julio_clubs_galleries][dependencies][] = julio_gallery
+feature_sets[julio_clubs_galleries][enable][] = julio_clubs_galleries
+feature_sets[julio_clubs_galleries][disable][] = julio_clubs_galleries
+
+feature_sets[julio_departments_announcements][title] = 'Meta departments announcements feature'
+feature_sets[julio_departments_announcements][dependencies][] = julio_departments
+feature_sets[julio_departments_announcements][dependencies][] = julio_announcements
+feature_sets[julio_departments_announcements][enable][] = julio_departments_announcements
+feature_sets[julio_departments_announcements][enable][] = julio_departments_announcements_ui
+feature_sets[julio_departments_announcements][disable][] = julio_departments_announcements
+feature_sets[julio_departments_announcements][disable][] = julio_departments_announcements_ui
+feature_sets[julio_departments_announcements][uninstall][] = julio_departments_announcements_ui
+
+feature_sets[julio_departments_events][title] = 'Meta departments events feature'
+feature_sets[julio_departments_events][dependencies][] = julio_departments
+feature_sets[julio_departments_events][dependencies][] = julio_events
+feature_sets[julio_departments_events][enable][] = julio_departments_events
+feature_sets[julio_departments_events][enable][] = julio_departments_events_ui
+feature_sets[julio_departments_events][disable][] = julio_departments_events
+feature_sets[julio_departments_events][disable][] = julio_departments_events_ui
+feature_sets[julio_departments_events][uninstall][] = julio_departments_events_ui
+
+feature_sets[julio_departments_galleries][title] = 'Meta departments galleries feature'
+feature_sets[julio_departments_galleries][dependencies][] = julio_departments
+feature_sets[julio_departments_galleries][dependencies][] = julio_gallery
+feature_sets[julio_departments_galleries][enable][] = julio_departments_galleries
+feature_sets[julio_departments_galleries][disable][] = julio_departments_galleries
+
+feature_sets[julio_teams_announcements][title] = 'Meta teams announcements feature'
+feature_sets[julio_teams_announcements][dependencies][] = julio_teams
+feature_sets[julio_teams_announcements][dependencies][] = julio_announcements
+feature_sets[julio_teams_announcements][enable][] = julio_teams_announcements
+feature_sets[julio_teams_announcements][enable][] = julio_teams_announcements_ui
+feature_sets[julio_teams_announcements][disable][] = julio_teams_announcements
+feature_sets[julio_teams_announcements][disable][] = julio_teams_announcements_ui
+feature_sets[julio_teams_announcements][uninstall][] = julio_teams_announcements_ui
+
+feature_sets[julio_teams_events][title] = 'Meta teams events feature'
+feature_sets[julio_teams_events][dependencies][] = julio_teams
+feature_sets[julio_teams_events][dependencies][] = julio_events
+feature_sets[julio_teams_events][enable][] = julio_teams_events
+feature_sets[julio_teams_events][enable][] = julio_teams_events_ui
+feature_sets[julio_teams_events][disable][] = julio_teams_events
+feature_sets[julio_teams_events][disable][] = julio_teams_events_ui
+feature_sets[julio_teams_events][uninstall][] = julio_teams_events_ui
+
+feature_sets[julio_teams_galleries][title] = 'Meta teams galleries feature'
+feature_sets[julio_teams_galleries][dependencies][] = julio_teams
+feature_sets[julio_teams_galleries][dependencies][] = julio_gallery
+feature_sets[julio_teams_galleries][enable][] = julio_teams_galleries
+feature_sets[julio_teams_galleries][disable][] = julio_teams_galleries
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

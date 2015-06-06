@@ -1,0 +1,362 @@
+<?php
+define('JULIO_DEFAULT_THEME', 'watt');
+/**
+ * Implements hook_intall().
+ */
+function julio_install() {
+  variable_set('theme_default', JULIO_DEFAULT_THEME);
+
+  // configure theme settings
+  julio_config_theme();
+
+  // configure some standard blocks
+  julio_blocks();
+
+  // configure navigational elements
+  julio_nav_config();
+
+  // Update the menu router information.
+  menu_rebuild();
+
+  //disable og_list view
+  $status = variable_get('views_defaults', array());
+  $status['og_list'] = TRUE;
+  variable_set('views_defaults', $status);
+
+  julio_blocks();
+  julio_setup_dashboard_blocks();
+  julio_cleanup();
+}
+
+/**
+ * Set dashboard blocks into the proper regions
+ */
+function julio_setup_dashboard_blocks() {
+  $defaults = array(
+    'theme' => 'seven',
+    'status' => 1,
+    'custom' => 0,
+    'visibility' => 0,
+    'pages' => '',
+    'title' => '',
+    'cache' => -1,
+  );
+  $blocks = array(
+    array(
+      'module' => 'menu',
+      'delta' => 'menu-julio-new-content',
+      'weight' => -13,
+      'region' => 'dashboard_sidebar',
+    ),
+    array (
+      'module' => 'menu',
+      'delta' => 'menu-julio-new-group',
+      'weight' => -14,
+      'region' => 'dashboard_sidebar',
+    ),
+    array (
+      'module' => 'menu',
+      'delta' => 'menu-julio-admin-quick-links',
+      'weight' => -15,
+      'region' => 'dashboard_sidebar',
+    ),
+    array (
+      'module' => 'search',
+      'delta' => 'form',
+      'weight' => 0,
+      'region' => 'dashboard_sidebar',
+    ),
+    array (
+      'module' => 'views',
+      'delta' => 'julio_admin_content_list-block',
+      'weight' => -14,
+      'region' => 'dashboard_main',
+    ),
+    array (
+      'module' => 'views',
+      'delta' => 'julio_admin_content_list-block_1',
+      'weight' => -15,
+      'region' => 'dashboard_main',
+    ),
+    array (
+      'module' => 'views',
+      'delta' => 'julio_admin_user_list-block',
+      'weight' => 0,
+      'region' => 'dashboard_main',
+    ),
+  );
+
+  foreach($blocks as $block) {
+    $block = array_merge($block, $defaults);
+    db_merge('block')
+      ->key(array(
+        'theme' => $block['theme'],
+        'delta' => $block['delta'],
+        'module' => $block['module'],
+      ))
+      ->fields(array(
+        'weight' => $block['weight'],
+        'status' => 1,
+        'region' => $block['region'],
+        'pages' => '',
+      ))
+      ->execute();
+  }
+}
+
+/**
+ *
+ */
+function julio_cleanup() {
+  $watt = array (
+    'toggle_logo' => 1,
+    'toggle_name' => 1,
+    'toggle_slogan' => 1,
+    'toggle_node_user_picture' => 0,
+    'toggle_comment_user_picture' => 0,
+    'toggle_comment_user_verification' => 0,
+    'toggle_favicon' => 0,
+    'toggle_main_menu' => 1,
+    'toggle_secondary_menu' => 0,
+    'example_plugin__NS__toggle_color_me' => 0,
+    'example_plugin__NS__toggle_flip_me' => 0,
+    'color_module__NS__toggle_color_module' => 1,
+    'default_logo' => 1,
+    'logo_path' => '',
+    'logo_upload' => '',
+    'default_favicon' => 1,
+    'favicon_path' => '',
+    'favicon_upload' => '',
+    'scheme' => 'default',
+    'palette' =>
+    array (
+      'base' => '#f5f5f5',
+      'top' => '#eea928',
+      'bottom' => '#2abcbc',
+      'bg' => '#eeeeee',
+      'page' => '#ffffff',
+      'sidebar' => '#fffeff',
+      'footer' => '#666666',
+      'text' => '#333333',
+      'link' => '#b31818',
+      'slide' => '#f4f5f5',
+    ),
+    'theme' => 'watt',
+    'info' =>
+    array (
+      'fields' =>
+      array (
+        'base' => 'Base',
+        'top' => 'Top Navigation',
+        'bottom' => 'Bottom Navigation',
+        'bg' => 'Main background',
+        'page' => 'Page background',
+        'sidebar' => 'Sidebar background',
+        'footer' => 'Footer background',
+        'text' => 'Text color',
+        'link' => 'Link color',
+        'slide' => 'Slideshow header',
+      ),
+      'schemes' =>
+      array (
+        'default' =>
+        array (
+          'title' => 'Colorful (default)',
+          'colors' =>
+          array (
+            'base' => '#f5f5f5',
+            'top' => '#eea928',
+            'bottom' => '#2abcbc',
+            'bg' => '#eeeeee',
+            'page' => '#ffffff',
+            'sidebar' => '#fffeff',
+            'footer' => '#666666',
+            'text' => '#333333',
+            'link' => '#b31818',
+            'slide' => '#f4f5f5',
+          ),
+        ),
+        'firehouse' =>
+        array (
+          'title' => 'Firehouse',
+          'colors' =>
+          array (
+            'base' => '#f5f5f5',
+            'top' => '#EEA928',
+            'bottom' => '#2ABCBC',
+            'bg' => '#ffffff',
+            'page' => '#ffffff',
+            'sidebar' => '#ffffff',
+            'footer' => '#666666',
+            'text' => '#333333',
+            'link' => '#B31818',
+            'slide' => '#f4f5f5',
+          ),
+        ),
+        'ice' =>
+        array (
+          'title' => 'Ice',
+          'colors' =>
+          array (
+            'base' => '#f5f5f5',
+            'top' => '#EEA928',
+            'bottom' => '#2ABCBC',
+            'bg' => '#ffffff',
+            'page' => '#ffffff',
+            'sidebar' => '#ffffff',
+            'footer' => '#292929',
+            'text' => '#333333',
+            'link' => '#B31818',
+            'slide' => '#f4f5f5',
+          ),
+        ),
+        '' =>
+        array (
+          'title' => 'Custom',
+          'colors' =>
+          array (
+          ),
+        ),
+      ),
+      'copy' =>
+      array (
+      ),
+      'css' =>
+      array (
+        0 => 'styles/colors.css',
+      ),
+      'gradients' =>
+      array (
+        0 =>
+        array (
+          'dimension' =>
+          array (
+            0 => 0,
+            1 => 0,
+            2 => 0,
+            3 => 0,
+          ),
+          'direction' => 'vertical',
+          'colors' =>
+          array (
+            0 => 'top',
+            1 => 'bottom',
+          ),
+        ),
+      ),
+      'fill' =>
+      array (
+      ),
+      'slices' =>
+      array (
+      ),
+      'blend_target' => '#000',
+      'preview_css' => 'color/preview.css',
+      'preview_js' => 'color/preview.js',
+      'preview_html' => 'color/preview.html',
+      'base_image' => 'color/base.png',
+    ),
+  );
+  variable_set('theme_watt_settings', $watt);
+
+  $css_options = array(
+    'font_size' => 'profiles/julio/themes/watt/css_options/Font Size.option/Medium - 14px.css',
+    'sidebar_position' => 'profiles/julio/themes/watt/css_options/Sidebar Position.option/Sidebar Left.css',
+    'texture' => 'profiles/julio/themes/watt/css_options/Texture.option/Noise.css',
+    'layout' => 'profiles/julio/themes/watt/css_options/Layout.option/Fluid (Responsive).css',
+    'font_family' => 'profiles/julio/themes/watt/css_options/Font Family.option/Sans-Serif (Helvetica, Arial).css',
+  );
+  variable_set('css_options_watt', $css_options);
+}
+
+/**
+ * Configure a few basic blocks
+ */
+function julio_blocks($admin_theme = 'seven') {
+  // Enable some standard blocks.
+  $default_theme = variable_get('theme_default', JULIO_DEFAULT_THEME);
+
+  // clean out any previous entries (in case a sub install profile calls this)
+  db_delete('block')->condition('theme', $default_theme)->execute();
+  db_delete('block')->condition('theme', $admin_theme)->execute();
+
+  $values = array(
+    array(
+      'module' => 'system',
+      'delta' => 'main',
+      'theme' => $admin_theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'content',
+      'pages' => '',
+      'cache' => -1,
+    ),
+    array(
+      'module' => 'system',
+      'delta' => 'help',
+      'theme' => $admin_theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'help',
+      'pages' => '',
+      'cache' => -1,
+    ),
+    array(
+      'module' => 'user',
+      'delta' => 'login',
+      'theme' => $admin_theme,
+      'status' => 1,
+      'weight' => 10,
+      'region' => 'content',
+      'pages' => '',
+      'cache' => -1,
+    ),
+    array(
+      'module' => 'user',
+      'delta' => 'new',
+      'theme' => $admin_theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'sidebar_first',
+      'pages' => '',
+      'cache' => -1,
+    ),
+
+  );
+  $query = db_insert('block')->fields(array('module', 'delta', 'theme', 'status', 'weight', 'region', 'pages', 'cache'));
+  foreach ($values as $record) {
+    $query->values($record);
+  }
+  $query->execute();
+}
+
+/**
+ * Adjust and theme settings
+ */
+function julio_config_theme() {
+  // Enable the admin theme.
+  db_update('system')
+    ->fields(array('status' => 1))
+    ->condition('type', 'theme')
+    ->condition('name', 'seven')
+    ->execute();
+  variable_set('admin_theme', 'seven');
+  variable_set('node_admin_theme', '1');
+}
+
+/**
+ * Add any navigational elements to the appropriate areas
+ */
+function julio_nav_config() {
+  // Create a Home link in the main menu.
+  $item = array(
+    'link_title' => st('Home'),
+    'link_path' => '<front>',
+    'menu_name' => 'main-menu',
+    'weight' => -10,
+  );
+  menu_link_save($item);
+
+  // Update the menu router information.
+  menu_rebuild();
+}

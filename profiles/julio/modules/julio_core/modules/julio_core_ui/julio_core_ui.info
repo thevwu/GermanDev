@@ -1,0 +1,23 @@
+name = Core UI
+description = Core user interface for julio
+core = 7.x
+package = Julio: Core
+php = 5.2.4
+project = julio
+dependencies[] = context
+dependencies[] = ctools
+dependencies[] = julio_core
+dependencies[] = julio_og_utilities
+dependencies[] = search
+datestamp = 1330733980
+features[context][] = julio_global
+features[context][] = julio_user
+features[ctools][] = context:context:3
+features[features_api][] = api:1
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

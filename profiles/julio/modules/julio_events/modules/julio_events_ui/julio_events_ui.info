@@ -1,0 +1,21 @@
+name = Events UI
+description = Events and calendar UI
+core = 7.x
+package = Julio: Events
+php = 5.2.4
+project = julio
+dependencies[] = context
+dependencies[] = context_og
+dependencies[] = julio_events
+dependencies[] = views
+features[context][] = julio_calendar_all
+features[context][] = julio_calendar_blocks
+features[ctools][] = context:context:3
+features[features_api][] = api:1
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

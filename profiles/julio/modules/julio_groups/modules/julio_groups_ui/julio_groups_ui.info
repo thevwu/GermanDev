@@ -1,0 +1,20 @@
+name = Groups UI
+description = Groups UI
+core = 7.x
+package = Julio: Core
+php = 5.2.4
+project = julio
+dependencies[] = context
+dependencies[] = context_og
+dependencies[] = julio_groups
+dependencies[] = og_menu
+features[context][] = julio_group_menu
+features[ctools][] = context:context:3
+features[features_api][] = api:1
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

@@ -1,0 +1,14 @@
+<?php
+
+include_once('julio_announcements.features.inc');
+
+function julio_announcements_init() {
+  $path = current_path();
+  $parts = explode('/', $path);
+  if (count($parts) == 2 && $parts[0] == 'announcements' && is_numeric($parts[1])) {
+    $node = node_load($parts[1]);
+    if (!empty($node)) {
+      og_context('node', $node);
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<?php
+/**
+ * @file
+ * Installation file for julio events.
+ */
+/**
+ * Implements hook_install().
+ */
+function julio_events_ui_install() {
+  $views_status = variable_get('views_defaults', array());
+  $views_status['calendar'] = TRUE; // TRUE means disable
+  variable_set('views_defaults', $views_status);
+  views_invalidate_cache();
+  drupal_flush_all_caches();
+}

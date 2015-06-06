@@ -1,0 +1,22 @@
+name = Teams UI
+description = Teams UI
+core = 7.x
+package = Julio: Teams
+php = 5.2.4
+project = julio
+dependencies[] = context
+dependencies[] = context_og
+dependencies[] = julio_teams
+dependencies[] = julio_teams_node
+dependencies[] = menu
+dependencies[] = views
+features[context][] = julio_teams
+features[ctools][] = context:context:3
+features[features_api][] = api:1
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

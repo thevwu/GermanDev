@@ -1,0 +1,198 @@
+/////////////////
+// Semantic.gs // for LESS: http://lesscss.org/
+/////////////////
+
+// Defaults which you can freely override
+@column-width: 60;
+@gutter-width: 20;
+@columns: 12;
+
+// Utility variable — you should never need to modify this
+@_gridsystem-width: (@column-width*@columns) + (@gutter-width*@columns) * 1px;
+
+// Set @total-width to 100% for a fluid layout
+@total-width: @_gridsystem-width;
+
+
+//////////
+// GRID //
+//////////
+
+body {
+	width: 100%;
+	.clearfix;
+}
+
+.row(@columns:@columns) {
+	display: inline-block;
+	width: @total-width*((@gutter-width + @_gridsystem-width)/@_gridsystem-width);
+	margin: 0 @total-width*(((@gutter-width*.5)/@_gridsystem-width)*-1);
+	.clearfix;
+}
+.column(@x,@columns:@columns) {
+	display: inline;
+	float: left;
+	width: @total-width*((((@gutter-width+@column-width)*@x)-@gutter-width) / @_gridsystem-width);
+	margin: 0 @total-width*((@gutter-width*.5)/@_gridsystem-width);
+}
+.offset(@offset:1) {
+	margin-left: (@gutter-width+@column-width)*@offset + @total-width*((@gutter-width*.5)/@_gridsystem-width);
+}
+
+// The micro clearfix http://nicolasgallagher.com/micro-clearfix-hack/
+.clearfix() {
+	*zoom:1;
+
+	&:before,
+	&:after {
+	    content:"";
+	    display:table;
+	}
+	&:after {
+	    clear:both;
+	}
+}
+
+//////////
+// GRID //
+//////////
+
+// Specify the number of columns and set column and gutter widths
+@columns: 12;
+@column-width: 60;
+@gutter-width: 20;
+
+// Uncomment the definition below for a percentage-based layout
+@total-width: 100%;
+
+@container-width: ((@column-width)*@columns) + ((@gutter-width)*@columns);
+
+// Push and Pull classes
+.push(@push: 1) {
+  position: relative;
+  left: percentage(((@column-width + @gutter-width)*@push) / @container-width);
+}
+
+.pull(@pull: 1) {
+  position: relative;
+  left: -(percentage(((@column-width + @gutter-width)*@pull) / @container-width));
+}
+
+// Alpha and Omega classes
+// TODO Add alpha/omega parameter to column function
+.alpha {
+  margin-left: 0;
+}
+
+.omega {
+  margin-right: 0;
+}
+
+// Reset
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+
+////////////
+// LAYOUT //
+////////////
+
+// center the contents
+#page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// header
+#site-header {
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+
+#page-header,
+.region-featured {
+  .column(12);
+}
+
+.site-branding {
+  .column(12);
+  margin-bottom: 0 0.25em;
+}
+
+.site-navigation {
+  .column(9);
+  float: right;
+}
+
+.header-wrapper {
+  display: inline;
+  float: right;
+  margin-top: 7px;
+  min-height: 32px;
+  width: 100%;
+}
+
+.region-header {
+  .column(12);
+  float: right;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+}
+
+.region-header .block {
+  margin-top: -7px;
+}
+
+// main and sidebar
+.region-content-wrapper {
+  .column(8);
+  .push(4);
+}
+.region-sidebar-first {
+  .column(4);
+  .pull(8);
+}
+.region-sidebar-second {
+//  .column(2);
+}
+
+.region-sidebar-first,
+.region-sidebar-second {
+  margin-bottom: 1.5em;
+}
+
+.triptych-wrapper {
+  float: left;
+  width: 100%;
+}
+
+.region-triptych-first,
+.region-triptych-middle,
+.region-triptych-last {
+  .column(4);
+}
+
+#site-footer {
+  display: block;
+  width: 100%;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.region-footer {
+  padding: 0 0.92857em;
+  margin-left: 10px;
+  margin-right: 10px;
+}

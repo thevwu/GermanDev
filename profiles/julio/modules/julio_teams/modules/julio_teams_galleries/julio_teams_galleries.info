@@ -1,0 +1,20 @@
+name = Teams Galleries
+description = Meta feature, requires julio_teams and julio_galleries
+core = 7.x
+package = Julio: Teams
+php = 5.2.4
+dependencies[] = features
+dependencies[] = og
+features[features_api][] = api:1
+features[og_features_permission][] = node:julio_team:create media_gallery content
+features[og_features_permission][] = node:julio_team:delete any media_gallery content
+features[og_features_permission][] = node:julio_team:delete own media_gallery content
+features[og_features_permission][] = node:julio_team:update any media_gallery content
+features[og_features_permission][] = node:julio_team:update own media_gallery content
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

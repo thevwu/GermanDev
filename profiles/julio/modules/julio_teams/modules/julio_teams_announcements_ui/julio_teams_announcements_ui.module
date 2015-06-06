@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Teams Announcements UI feature.
+ */
+
+include_once 'julio_teams_announcements_ui.features.inc';

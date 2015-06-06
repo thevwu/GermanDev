@@ -1,0 +1,195 @@
+body {
+  background-color: #C6DCDC;
+}
+
+body {
+  color: #555555;
+}
+
+#page-main {
+  background: #ffffff;
+}
+
+/* Link */
+a,
+a:link,
+a:hover,
+a:active,
+a:visited,
+ul.pager li a,
+ul.pager li a.active {
+  color: #BE4F4F;
+}
+
+
+/* Navigation */
+.header-wrapper {
+  background-color: #ECB43F;
+}
+
+.site-navigation a,
+.site-navigation a:link,
+.site-navigation a:hover,
+.site-navigation a:active,
+.site-navigation a:visited {
+  color: #555555;
+}
+
+ul.main-menu li a:hover,
+ul.main-menu li a.active {
+  background: #BE4F4F;
+}
+
+ul.main-menu li a:hover,
+ul.main-menu li a.active {
+  color: #f5f5f5;
+}
+
+.region-header .block ul.menu {
+  background: #ECB43F;
+}
+
+.region-header .block ul.menu li a,
+.region-header .block .view .item-list ul li a {
+  color: #f5f5f5;
+}
+
+/* Sidebars */
+.region-sidebar-first .block,
+.region-sidebar-second .block {
+  background: #fffeff;
+}
+.region-sidebar-first .block .view-content .item-list ul li a.active,
+.region-sidebar-first .block .view-content .item-list ul li a:hover,
+.triptych-wrapper .block .view-content .item-list ul li a.active,
+.triptych-wrapper .block .view-content .item-list ul li a:hover,
+ul.quicktabs-tabs li.active a.active,
+ul.quicktabs-tabs li a:hover {
+  background: #BE4F4F;
+}
+
+/* Homepage */
+.front .region-content .node p {
+  background-color: #C6DCDC;
+}
+.region-triptych-first h2,
+.region-content .block-quicktabs h2 {
+  border-color: #BE4F4F;
+  opacity: .85;
+}
+.region-triptych-middle h2,
+.front .region-sidebar-first h2 {
+  border-color: #BE4F4F;
+  opacity: .85;
+}
+.region-triptych-last h2,
+.front .region-sidebar-second h2 {
+  border-color: #ECB43F;
+  opacity: .85;
+}
+
+.region-triptych-first .content,
+.region-content .block-quicktabs .content {
+  border-color: #BE4F4F;
+}
+.region-triptych-middle .content,
+.region-sidebar-first .content {
+  border-color: #BE4F4F;
+}
+.region-triptych-last .content,
+.region-sidebar-second .content {
+  border-color: #ECB43F;
+}
+
+/* Footer */
+#site-footer {
+  background: #777777;
+}
+
+#site-footer {
+  color: #f5f5f5;
+}
+
+#site-footer a:link,
+#site-footer a:hover,
+#site-footer a:active,
+#site-footer a:visited {
+  color: #f5f5f5;
+  border-bottom-color: #f5f5f5;
+}
+
+/* Nivo Slider */
+.block-media-nivo-slider .nivo-caption h1,
+.block-media-nivo-slider .nivo-caption h2,
+.block-media-nivo-slider .nivo-caption h3,
+.block-media-nivo-slider .nivo-caption h4 {
+  color: #f4f5f5;
+}
+
+/* Calendar */
+.calendar-calendar .month-view .full td.multi-day div.monthview,
+.calendar-calendar .week-view .full td.multi-day div.weekview,
+.calendar-calendar .day-view .full td.multi-day div.dayview,
+.calendar-calendar .month-view .full td.multi-day .inner .monthview .continues,
+.calendar-calendar .month-view .full td.multi-day .inner .monthview .cutoff,
+.calendar-calendar .week-view .full td.multi-day .inner .weekview .continues,
+.calendar-calendar .week-view .full td.multi-day .inner .weekview .cutoff {
+  background: #ECB43F;
+}
+
+.event-day {
+  color: #ECB43F;
+}
+
+/* For corner fold extra css option */
+.region-sidebar-first .block:before,
+.region-sidebar-second .block:before {
+  border-color: #ffffff #ffffff #fffeff #fffeff;
+}
+
+/*******************************************************************
+ * Color Module: Don't touch                                       *
+ *******************************************************************/
+
+/* Link color will always be dark, so hover text should always be light */
+.region-sidebar-first .block .view-content .item-list ul li a.active,
+.region-sidebar-first .block .view-content .item-list ul li a:hover,
+.triptych-wrapper .block .view-content .item-list ul li a.active,
+.triptych-wrapper .block .view-content .item-list ul li a:hover,
+ul.quicktabs-tabs li a:hover,
+ul.quicktabs-tabs li.active a.active {
+  color: #f5f5f5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #111;
+}
+
+td,
+fieldset,
+textarea {
+  border-color: #cccccc;
+}
+tr.even {
+  background-color: #f6f6f0;
+}
+tr.odd {
+  background-color: #ffffff;
+}
+
+html.js table.sticky-enabled,
+#autocomplete {
+  -webkit-box-shadow: 0 .1em .2em #aaaaaa;
+     -moz-box-shadow: 0 .1em .2em #aaaaaa;
+          box-shadow: 0 .1em .2em #aaaaaa;
+}
+html.js table.sticky-header {
+  -webkit-box-shadow: 0 .2em .2em #aaaaaa;
+     -moz-box-shadow: 0 .2em .2em #aaaaaa;
+          box-shadow: 0 .2em .2em #aaaaaa;
+}

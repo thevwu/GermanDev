@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function julio_teams_node_install() {
+  // Add an teams node of type julio_administrative_unit
+  $node = new stdClass;
+  $node->type = 'julio_administrative_unit';
+
+  node_object_prepare($node);
+
+  $node->title = st('Athletics');
+  $node->language = LANGUAGE_NONE;
+  $node->path = array(
+    'pathauto' => FALSE,
+    'alias' => 'athletics',
+  );
+
+  $bodytext = t('This is the athletics/teams landing page. You should click the "edit" tab and replace this with content pertinent to athletics and at your institution.');
+  $node->body[$node->language][0]['value']   = $bodytext;
+  $node->body[$node->language][0]['summary'] = text_summary($bodytext);
+  $node->body[$node->language][0]['format'] = 'filtered_html';
+
+
+  $node->menu['enabled'] = 1;
+  $node->menu['link_title'] = st('Athletics');
+  $node->menu['description'] = st('Athletics');
+  $node->menu['menu_name'] = 'main-menu';
+  $node->menu['weight'] = 8;
+
+  $node->promote = 0;
+
+  node_save($node);
+  variable_set('julio_teams_nid', $node->nid);
+
+  // Update the menu router information.
+  menu_rebuild();
+
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function julio_teams_node_uninstall() {
+  $nid = variable_get('julio_teams_nid', 0);
+  if (!empty($nid)) {
+    node_delete($nid);
+  }
+  variable_del('julio_teams_nid');
+}

@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * Implements hook_block_info().
+ */
+function julio_og_utilities_block_info() {
+  $blocks['og_admin'] = array(
+    'info' => t('OG Administration'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function julio_og_utilities_block_view($delta = '') {
+  if ($delta == 'og_admin') {
+    $block = array('subject' => '', 'content' => '');
+    if ($group = og_context()) {
+      if (og_user_access($group['group_type'], $group['gid'], 'administer group')) {
+        $node = node_load($group['gid']);
+        $links = julio_og_utilities_get_og_admin_links($node);
+        $block['subject'] = t('%title Administration', array('%title' => $node->title));
+        $block['content'] = theme_links(array('links' => $links, 'attributes' => array(), 'heading' => ''));
+      }
+    }
+    return $block;
+  }
+}
+
+
+/**
+ *
+ */
+function julio_og_utilities_get_og_admin_links($node) {
+  $links = array();
+  $links[] = array(
+    'href' => 'group/node/' . $node->nid . '/admin/people',
+    'title' => t('Manage Members'),
+  );
+  $links[] = array(
+    'href' => 'group/node/'  . $node->nid . '/admin/people/add-user',
+    'title' => t('Add Member'),
+  );
+  $links[] = array(
+    'href' => 'group/node/' .$node->nid . '/admin/content',
+    'title' => t('Recent Content'),
+  );
+  $links[] = array(
+    'href' => 'group/node/' . $node->nid . '/admin/menus',
+    'title' => t('Manage Menus'),
+  );
+  return $links;
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function julio_og_utilities_menu_alter(&$items) {
+  // get rid of some node-level tabs
+  $items['node/%/group']['type'] = MENU_CALLBACK;
+  $items['node/%node/og_menu']['type'] = MENU_CALLBACK;
+}

@@ -1,0 +1,19 @@
+<?php
+/**
+ * @file
+ * Code for the Departments feature.
+ */
+
+include_once('julio_departments.features.inc');
+
+/**
+ * Implements hook_block_view_alter().
+ *
+ * Can't use hook_block_view_MODULE_DELTA_alter because delta has '-'
+ * http://drupal.org/node/1076132
+ */
+function julio_departments_block_view_alter(&$data, $block) {
+  if ($block->module == 'menu' && $block->delta == 'menu-julio-departments-menu') {
+    $data['subject'] = '';
+  }
+}

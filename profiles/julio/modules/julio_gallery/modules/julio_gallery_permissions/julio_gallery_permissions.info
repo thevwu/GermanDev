@@ -1,0 +1,23 @@
+name = Gallery Permissions
+description = Media gallery settings permissions
+core = 7.x
+package = Julio: Gallery
+php = 5.2.4
+project = julio
+dependencies[] = features
+dependencies[] = julio_gallery
+dependencies[] = media_gallery
+features[features_api][] = api:1
+features[user_permission][] = administer media galleries
+features[user_permission][] = create media_gallery content
+features[user_permission][] = delete any media_gallery content
+features[user_permission][] = delete own media_gallery content
+features[user_permission][] = edit any media_gallery content
+features[user_permission][] = edit own media_gallery content
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

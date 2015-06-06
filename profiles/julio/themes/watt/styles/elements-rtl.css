@@ -1,0 +1,13 @@
+
+/**
+ * @file
+ * Supplies default RTL styling, spacing and typographic grids for html elements.
+ */
+
+ul,ol {
+  padding-left: 0;
+  padding-right: 1em;
+}
+th,td {
+  text-align: right;
+}

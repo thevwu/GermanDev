@@ -1,0 +1,30 @@
+name = Staff
+description = Faculty and Staff Directory
+core = 7.x
+package = Julio: Core
+php = 5.2.4
+project = julio
+dependencies[] = email
+dependencies[] = features
+dependencies[] = flag
+dependencies[] = julio_core
+dependencies[] = views
+datestamp = 1330733980
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:1
+features[field][] = user-user-field_julio_department
+features[field][] = user-user-field_julio_email
+features[field][] = user-user-field_julio_first_name
+features[field][] = user-user-field_julio_job_title
+features[field][] = user-user-field_julio_last_name
+features[field][] = user-user-field_julio_phone
+features[flag][] = julio_staff
+features[user_permission][] = access user profiles
+features[views_view][] = julio_faculty_staff
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

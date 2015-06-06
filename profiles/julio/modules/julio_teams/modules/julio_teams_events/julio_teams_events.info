@@ -1,0 +1,28 @@
+name = Teams Events
+description = Requires julio_events and julio_teams.
+core = 7.x
+package = Julio: Teams
+php = 5.2.4
+project = julio
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = fullcalendar
+dependencies[] = julio_events
+dependencies[] = julio_teams
+dependencies[] = og
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:1
+features[og_features_permission][] = node:julio_team:create julio_event content
+features[og_features_permission][] = node:julio_team:delete any julio_event content
+features[og_features_permission][] = node:julio_team:delete own julio_event content
+features[og_features_permission][] = node:julio_team:update any julio_event content
+features[og_features_permission][] = node:julio_team:update own julio_event content
+features[views_view][] = julio_teams_calendar
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

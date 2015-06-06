@@ -1,0 +1,20 @@
+name = Clubs Galleries
+description = Meta feature, requires julio_clubs and julio_galleries
+core = 7.x
+package = Julio: Clubs
+php = 5.2.4
+dependencies[] = features
+dependencies[] = og
+features[features_api][] = api:1
+features[og_features_permission][] = node:julio_club:create media_gallery content
+features[og_features_permission][] = node:julio_club:delete any media_gallery content
+features[og_features_permission][] = node:julio_club:delete own media_gallery content
+features[og_features_permission][] = node:julio_club:update any media_gallery content
+features[og_features_permission][] = node:julio_club:update own media_gallery content
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

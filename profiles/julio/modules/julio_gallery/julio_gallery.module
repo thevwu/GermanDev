@@ -1,0 +1,46 @@
+<?php
+/**
+ * @file
+ * Code for the Gallery feature.
+ */
+
+include_once('julio_gallery.features.inc');
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function julio_gallery_form_alter(&$form, &$form_state, $form_id) {
+  if (strpos($form_id, 'media_edit') === 0) {
+    if (isset($form['media_description']) && isset($form['media_nivo_slider_image_caption'])) {
+      // Hide the media nivo slider caption we will use the description value on submit.
+      foreach(element_children($form['media_description']) as $lang) {
+        foreach(element_children($form['media_description'][$lang]) as $element) {
+          $form['media_nivo_slider_image_caption'][$lang][$element] = $form['media_description'][$lang][$element];
+          $form['media_nivo_slider_image_caption'][$lang][$element]['#access'] = FALSE;
+          $form['media_description'][$lang][$element]['#description'] .= t('Please note: Captions for slideshows are taken from above description, but truncated to approximately 400 characters.');
+        }
+      }
+      array_unshift($form['#validate'], 'julio_gallery_media_edit_validate');
+    }
+  }
+}
+
+/**
+ * Validator function for media_gallery nodes. This just sets the
+ * nivo_slider_caption to the submitted value of the media_description since we
+ * hid that.
+ */
+function julio_gallery_media_edit_validate($form, &$form_state) {
+  // Add media title to caption
+  if (!empty($form_state['values']['media_nivo_slider_image_caption'][LANGUAGE_NONE][0]['value'])) {
+    $caption = '<h2>' . $form_state['values']['media_title'][LANGUAGE_NONE][0]['value'] . '</h2>';
+    $caption .= text_summary($form_state['values']['media_description'][LANGUAGE_NONE][0]['value'], $form_state['values']['media_description'][LANGUAGE_NONE][0]['format'], 400);
+    $form_state['values']['media_nivo_slider_image_caption'][LANGUAGE_NONE][0]['value'] = $caption;
+  }
+
+  // Add a read more link pointing to the slide link if present
+  if (!empty($form_state['values']['media_nivo_slider_image_link'][LANGUAGE_NONE][0]['value'])) {
+    $slide_link = l('<div class="more-link">Read more &raquo;</div>', $form_state['values']['media_nivo_slider_image_link'][LANGUAGE_NONE][0]['value'], array('html' => TRUE));
+    $form_state['values']['media_nivo_slider_image_caption'][LANGUAGE_NONE][0]['value'] .= $slide_link;
+  }
+}

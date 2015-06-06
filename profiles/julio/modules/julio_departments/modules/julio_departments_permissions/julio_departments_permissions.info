@@ -1,0 +1,38 @@
+name = Departments Permissions
+description = Departments and Academic Units Permissions
+core = 7.x
+package = Julio: Departments
+php = 5.2.4
+project = julio
+dependencies[] = features
+dependencies[] = julio_departments
+dependencies[] = og_menu
+features[features_api][] = api:1
+features[og_features_permission][] = node:julio_department:add user
+features[og_features_permission][] = node:julio_department:administer group
+features[og_features_permission][] = node:julio_department:administer og menu
+features[og_features_permission][] = node:julio_department:approve and deny subscription
+features[og_features_permission][] = node:julio_department:create julio_group_post content
+features[og_features_permission][] = node:julio_department:delete any julio_group_post content
+features[og_features_permission][] = node:julio_department:delete own julio_group_post content
+features[og_features_permission][] = node:julio_department:manage members
+features[og_features_permission][] = node:julio_department:manage permissions
+features[og_features_permission][] = node:julio_department:manage roles
+features[og_features_permission][] = node:julio_department:subscribe
+features[og_features_permission][] = node:julio_department:subscribe without approval
+features[og_features_permission][] = node:julio_department:unsubscribe
+features[og_features_permission][] = node:julio_department:update any julio_group_post content
+features[og_features_permission][] = node:julio_department:update group
+features[og_features_permission][] = node:julio_department:update own julio_group_post content
+features[user_permission][] = create julio_department content
+features[user_permission][] = delete any julio_department content
+features[user_permission][] = delete own julio_department content
+features[user_permission][] = edit any julio_department content
+features[user_permission][] = edit own julio_department content
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

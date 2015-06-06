@@ -1,0 +1,46 @@
+name = Groups
+description = Basic groups integration and group posts.
+core = 7.x
+package = Julio: Core
+php = 5.2.4
+project = julio
+dependencies[] = colorbox
+dependencies[] = entityreference
+dependencies[] = entityreference_prepopulate
+dependencies[] = features
+dependencies[] = image
+dependencies[] = julio_core
+dependencies[] = list
+dependencies[] = og
+dependencies[] = og_ui
+dependencies[] = options
+dependencies[] = strongarm
+datestamp = 1330733980
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:1
+features[field][] = node-julio_group_post-body
+features[field][] = node-julio_group_post-field_image
+features[field][] = node-julio_group_post-field_julio_add_img
+features[field][] = node-julio_group_post-field_julio_files
+features[field][] = node-julio_group_post-julio_og_group_ref
+features[image][] = julio_additional_img
+features[menu_links][] = menu-julio-new-content:node/add/julio-group-post
+features[node][] = julio_group_post
+features[user_permission][] = create julio_group_post content
+features[user_permission][] = delete any julio_group_post content
+features[user_permission][] = delete own julio_group_post content
+features[user_permission][] = edit any julio_group_post content
+features[user_permission][] = edit own julio_group_post content
+features[variable][] = field_bundle_settings_node__julio_group_post
+features[variable][] = menu_options_julio_group_post
+features[variable][] = menu_parent_julio_group_post
+features[variable][] = node_options_julio_group_post
+features[variable][] = node_preview_julio_group_post
+features[variable][] = node_submitted_julio_group_post
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

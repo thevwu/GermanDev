@@ -1,0 +1,20 @@
+name = Teams Events UI
+description = Context for teams events.
+core = 7.x
+package = Julio: Teams
+php = 5.2.4
+project = julio
+dependencies[] = context
+dependencies[] = ctools
+dependencies[] = julio_teams_events
+dependencies[] = views
+features[context][] = julio_teams_events
+features[ctools][] = context:context:3
+features[features_api][] = api:1
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

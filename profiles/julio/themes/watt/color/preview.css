@@ -1,0 +1,311 @@
+/*
+ * Elements
+ */
+
+#preview h1,
+#preview h2 {
+  font-weight: normal;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  line-height: 1em;
+}
+#preview h1 {
+  font-size: 2em;        /* 28px */
+  padding: .1666em 0 .2916em; /* 4px 0 7px */
+  margin: .2916em 0;          /* 7px 0 */
+}
+#preview a:link,
+#preview a:hover,
+#preview a:active,
+#preview a:visited {
+  text-decoration: none;
+}
+
+#preview a,
+#preview a:hover
+#preview a:active {
+  cursor: pointer;
+}
+
+
+/* 
+ * Page sections
+ */
+
+/* General */
+
+#preview {
+  margin: 0 auto;
+  overflow: hidden;
+  width: 100%;
+}
+#preview-inner {
+  margin: 0 auto;
+  width: 90%;
+}
+#site-header-preview,
+#page-header-preview,
+#page-main-preview,
+#main-content-preview,
+#preview.site-navigation,
+#preview .content-header,
+#preview .content,
+#preview .region,
+#preview .node {
+  margin-bottom: 1.5em;
+}
+#page-main-preview {
+  padding-top: 1em;
+}
+#preview .site-id,
+#preview .site-slogan,
+#preview .region-header,
+#preview .region-footer,
+#preview .region-footer .content,
+#preview .region-page-top,
+#preview .region-page-bottom {
+  margin: 0;
+}
+#preview .region-content-wrapper .content-header,
+#preview .region-content-wrapper #main-content-preview {
+  padding: 0 0.92857em;
+}
+#preview .region-sidebar-first .block,
+#preview .region-sidebar-second .block {
+  padding: 1px 0.92857em 0;
+}
+
+
+/* Header */
+
+#preview .site-id {
+  font-size: 2.5em;
+  width: 5em;
+  padding-top: .5em;
+}
+#preview .site-id a {
+  text-decoration: none;
+}
+#preview .site-id .logo {
+  float: left;         /* LTR */
+  margin-right: .25em; /* LTR */
+  margin-top: -.5em;
+}
+#site-header-preview {
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+#preview .site-branding {
+  display: inline;
+  float: left;
+  width: 97.91666666666666%;
+  margin: 0 1.0416666666666665%;
+  margin-bottom: 0.5em;
+}
+#preview .header-wrapper {
+  display: inline;
+  float: right;
+  margin-top: 7px;
+  min-height: 32px;
+  width: 100%;
+}
+#preview .region-header {
+  display: inline;
+  float: left;
+  width: 97.91666666666666%;
+  margin: 0 1.0416666666666665%;
+  float: right;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+}
+#preview .region-header .block {
+  margin-top: -7px;
+}
+
+#preview .site-navigation {
+  display: inline;
+  float: right;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  margin: 0 1.0416666666666665%;
+  margin-top: -22px;
+  width: 72.91666666666666%;
+}
+
+#preview ul.main-menu {
+  display: block;
+  float: right;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#preview ul.main-menu li {
+  display: inline;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-size: 0.92857em;
+  font-weight: bold;
+  padding: 10px 0;
+  text-transform: uppercase;
+}
+#preview ul.main-menu li a {
+  margin: 0 0 0 -5px;
+  padding: 10px;
+}
+#preview ul.main-menu li.last {
+  border-right: none;
+}
+#preview .block .view .item-list ul,
+#preview .block ul.menu {
+  list-style-type: none;
+  padding: 0;
+}
+#preview .region-header .block ul.menu {
+  display: block;
+  text-align: right;
+  margin: 7px 0 0px 0;
+  padding: 0;
+}
+#preview .region-header .block .content {
+  margin-bottom: 0;
+}
+#preview .region-header .block ul.menu li,
+#preview .region-sidebar-first .block .view .item-list ul li {
+  margin: 0;
+  padding: 0;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+#preview .region-header .block ul.menu li {
+  font-size: 0.92857em;
+}
+#preview .region-header .block ul.menu li a,
+#preview .region-header .block .view .item-list ul li a {
+  display: block;
+  padding: .5em;
+  text-transform: uppercase;
+  border-right: 1px solid #f5f5f5;
+}
+#preview .region-header .block ul.menu li.last a {
+  border-right: none;
+}
+#preview .region-header .block ul.menu li a:hover,
+#preview .region-header .block ul.menu li a.active {
+  text-decoration: underline;
+}
+#preview .region-header .block ul.menu li a,
+#preview .region-sidebar-first .block .view .item-list ul li a {
+  display: block;
+  padding: .5em;
+}
+#site-header-preview .block ul li {
+  display: inline-block;
+}
+
+/* Content area */
+
+#preview .region-content-wrapper {
+  display: inline;
+  float: left;
+  width: 64.58333333333334%;
+  margin: 0 1.0416666666666665%;
+  position: relative;
+  left: 33.33333333333333%;
+}
+#main-content-preview .content {
+  line-height: 1.71428571em;
+  /* 24px */
+}
+
+/* Sidebar */
+
+#preview .region-sidebar-first {
+  display: inline;
+  float: left;
+  width: 31.25%;
+  margin: 0 1.0416666666666665%;
+  position: relative;
+  left: -66.66666666666666%;
+}
+#preview .region-sidebar-first {
+  margin-bottom: 1.5em;
+}
+#preview .region-sidebar-first .block ul {
+  margin: 0;
+}
+#preview .region-sidebar-first .block .view .item-list ul li,
+#preview .region-sidebar-first .block ul.menu li.leaf {
+  list-style: none;
+  margin-left: 0;
+}
+
+/* Footer */
+
+#site-footer-preview {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  display: block;
+  width: 100%;
+  padding-top: .2em;
+  padding-bottom: 1px;
+}
+#preview .region-footer {
+  padding: 0 0.92857em;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+#site-footer-preview a {
+  border-bottom: 1px dotted #000;
+  font-weight: bold;
+}
+
+/*
+ * Functionality
+ */
+
+/* Views */
+
+#preview .region-sidebar-first .block .view .item-list ul li p {
+  margin-bottom: 0;
+}
+#page-main-preview .views-row {
+  border-bottom: 1px dotted #ccc;
+}
+#page-main-preview .views-row.views-row-first {
+  border-top: 1px dotted #ccc;
+}
+#page-main-preview .no-border, #page-main-preview .no-border .views-row {
+  border: none;
+}
+/* Events */
+#preview .event-block .views-row {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+#preview .event-block .views-field-title a {
+  display: block;
+  margin-left: 68px;
+  padding: 0.5em;
+}
+#preview .event-block .views-field-title a:hover,
+#preview .event-block .views-field-title a:active {
+  text-decoration: underline;
+}
+#preview .event-date {
+  float: left;
+  font-weight: normal;
+  padding-top: 3px;
+  padding-bottom: 7px;
+  padding-left: 0.5em;
+}
+#preview .event-day {
+  display: block;
+  font-size: 3em;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  margin-top: -25px;
+  line-height: 1em;
+}
+#preview .event-month {
+  display: block;
+  text-transform: uppercase;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #999;
+  text-align: center;
+}

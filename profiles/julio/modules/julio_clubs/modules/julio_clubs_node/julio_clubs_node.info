@@ -1,0 +1,13 @@
+name = Clubs Node
+description = Creates the clubs node
+core = 7.x
+dependencies[] = "julio_clubs"
+package = Julio: Clubs
+project = "julio"
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

@@ -1,0 +1,43 @@
+name = Administrative Unit
+description = Administrative Units
+core = 7.x
+package = Julio: Administrative Unit
+php = 5.2.4
+project = julio
+dependencies[] = colorbox
+dependencies[] = features
+dependencies[] = image
+dependencies[] = julio_core
+dependencies[] = julio_groups
+dependencies[] = list
+dependencies[] = og_ui
+dependencies[] = strongarm
+datestamp = 1330733980
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:1
+features[field][] = node-julio_administrative_unit-body
+features[field][] = node-julio_administrative_unit-field_image
+features[field][] = node-julio_administrative_unit-field_julio_add_img
+features[field][] = node-julio_administrative_unit-group_group
+features[field][] = node-julio_administrative_unit-og_roles_permissions
+features[menu_links][] = menu-julio-new-group:node/add/julio-administrative-unit
+features[node][] = julio_administrative_unit
+features[variable][] = comment_anonymous_julio_administrative_unit
+features[variable][] = comment_default_mode_julio_administrative_unit
+features[variable][] = comment_default_per_page_julio_administrative_unit
+features[variable][] = comment_form_location_julio_administrative_unit
+features[variable][] = comment_julio_administrative_unit
+features[variable][] = comment_preview_julio_administrative_unit
+features[variable][] = comment_subject_field_julio_administrative_unit
+features[variable][] = menu_options_julio_administrative_unit
+features[variable][] = menu_parent_julio_administrative_unit
+features[variable][] = node_options_julio_administrative_unit
+features[variable][] = node_preview_julio_administrative_unit
+features[variable][] = node_submitted_julio_administrative_unit
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

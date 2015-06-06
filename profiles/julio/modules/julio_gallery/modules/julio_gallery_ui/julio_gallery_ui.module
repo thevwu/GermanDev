@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Gallery UI feature.
+ */
+
+include_once('julio_gallery_ui.features.inc');

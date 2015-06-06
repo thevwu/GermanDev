@@ -1,0 +1,38 @@
+name = Teams Permissions
+description = School Athletic Teams Permissions
+core = 7.x
+package = Julio: Teams
+php = 5.2.4
+project = julio
+dependencies[] = features
+dependencies[] = julio_teams
+dependencies[] = og_menu
+features[features_api][] = api:1
+features[og_features_permission][] = node:julio_team:add user
+features[og_features_permission][] = node:julio_team:administer group
+features[og_features_permission][] = node:julio_team:administer og menu
+features[og_features_permission][] = node:julio_team:approve and deny subscription
+features[og_features_permission][] = node:julio_team:create julio_group_post content
+features[og_features_permission][] = node:julio_team:delete any julio_group_post content
+features[og_features_permission][] = node:julio_team:delete own julio_group_post content
+features[og_features_permission][] = node:julio_team:manage members
+features[og_features_permission][] = node:julio_team:manage permissions
+features[og_features_permission][] = node:julio_team:manage roles
+features[og_features_permission][] = node:julio_team:subscribe
+features[og_features_permission][] = node:julio_team:subscribe without approval
+features[og_features_permission][] = node:julio_team:unsubscribe
+features[og_features_permission][] = node:julio_team:update any julio_group_post content
+features[og_features_permission][] = node:julio_team:update group
+features[og_features_permission][] = node:julio_team:update own julio_group_post content
+features[user_permission][] = create julio_team content
+features[user_permission][] = delete any julio_team content
+features[user_permission][] = delete own julio_team content
+features[user_permission][] = edit any julio_team content
+features[user_permission][] = edit own julio_team content
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

@@ -1,0 +1,35 @@
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'CopseRegular', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  font-weight: normal;
+}
+#site-footer {
+  font-family: 'CopseRegular', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+ul.main-menu li,
+ul.quicktabs-tabs li {
+  font-family: 'CopseRegular', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+.front .region-content .node,
+.region-header .block ul.menu li,
+.region-sidebar-first .block .view .item-list ul li,
+.triptych-wrapper .block .view .item-list ul li,
+.event-block .views-row,
+.quicktabs_main,
+.region-header-top,
+.more-link {
+  font-family: 'CopseRegular', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  font-weight: normal;
+}
+
+@font-face {
+    font-family: 'CopseRegular';
+    src: url('../../fonts/copse/Copse-Regular-webfont.eot');
+    src: url('../../fonts/copse/Copse-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/copse/Copse-Regular-webfont.woff') format('woff'),
+         url('../../fonts/copse/Copse-Regular-webfont.ttf') format('truetype'),
+         url('../../fonts/copse/Copse-Regular-webfont.svg#CopseRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+

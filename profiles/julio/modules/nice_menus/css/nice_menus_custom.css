@@ -1,0 +1,284 @@
+/*
+  This is the default layout template for nice menus, and will provide
+  a starting point for the look of your menus. To customize, it's
+  recommended to create a custom CSS file using this file as a template,
+  then configure the module to use your custom CSS file
+  (this is done in the global settings tab of the theme administration.)
+
+  See README.txt and the handbook page (http://drupal.org/node/185543)
+  for more information on using the CSS.
+*/
+
+/******************************
+ Global CSS for ALL menu types
+******************************/
+
+ul.nice-menu,
+ul.nice-menu ul {
+  list-style: none;
+  padding: 7px;
+  margin: 0;
+  border-top: 0px; /*generic border for everything*/
+  height: 26px;
+  padding-left: 0px; /*-> 0 /*spacing for home menu item only*/
+}
+/* first and last items of the drop down menu, no items to drop down */
+ul.nice-menu ul, 
+ul.nice-menu li {
+border: 0;
+}
+
+ul.nice-menu li { /* also first and last */
+  border: 0px; /*gets rid of borders*/
+  border-top: 0;
+  float: left; /* LTR */
+}
+
+ul.nice-menu li a:hover { /*hovered text*/
+  text-decoration:underline;
+}
+
+ul.nice-menu a { /* adjusts everything, careful */
+/*padding: up, right border, south border, left border*/
+  padding: 8px 0px 5px 0px; /* -> 8px 0px 5px 0pxspacing for home menu item */
+  padding-left: 4%;
+  /*background-color: #44749D;*/
+  color: #3C3C3C;
+}
+
+ul.nice-menu ul { /* border surrounding drop down menu items*/
+  top: 1.8em;
+  left: -1px; /* LTR */
+  border: 0;
+  border-top: 0px;
+  margin-right: 0; /* LTR */
+}
+
+ul.nice-menu ul li { /* width of drop down menu items */
+  width: 12.5em;
+}
+
+/******************************
+ VERTICAL (left/right) menus
+******************************/
+
+/* This is the default width of all vertical menus. */
+ul.nice-menu-right,
+ul.nice-menu-left,
+ul.nice-menu-right li,
+ul.nice-menu-left li {
+  width: 12.5em;
+}
+
+/* VERTICAL menus where submenus pop RIGHT (default). */
+ul.nice-menu-right ul {
+  width: 12.5em;
+  left: 12.5em;
+  top: -1px;
+}
+
+ul.nice-menu-right ul ul {
+  width: 12.5em;
+  left: 12.5em;
+  top: -1px;
+}
+
+ul.nice-menu-right li.menuparent,
+ul.nice-menu-right li li.menuparent {
+  background: #eee url("../images/arrow-right.png") right center no-repeat;
+}
+
+ul.nice-menu-right li.menuparent:hover,
+ul.nice-menu-right li li.menuparent:hover {
+  background: #ccc url("../images/arrow-right.png") right center no-repeat;
+}
+
+/* VERTICAL menus where submenus pop LEFT. */
+ul.nice-menu-left li ul {
+  width: 12.5em;
+  left: -12.65em;
+  top: -1px;
+}
+
+ul.nice-menu-left li ul li ul {
+  width: 12.5em;
+  left: -12.65em;
+  top: -1px;
+}
+
+ul.nice-menu-left li.menuparent,
+ul.nice-menu-left li li.menuparent {
+  background: #eee url("../images/arrow-left.png") left center no-repeat;
+}
+
+ul.nice-menu-left li.menuparent:hover,
+ul.nice-menu-left li li.menuparent:hover {
+  background: #ccc url("../images/arrow-left.png") left center no-repeat;
+}
+
+ul.nice-menu-left a,
+ul.nice-menu-left ul a {
+  padding-left: 14px;
+}
+
+/******************************
+ HORIZONTAL (down) menus
+******************************/
+
+ul.nice-menu-down { /* entirety, location of drop down menus */
+  float: left; /* LTR */ /*align left or right */
+  border: 0;
+}
+
+ul.nice-menu-down li { /*border for entire menu*/
+  border-top: 0px; /*borders for menu*/
+}
+
+ul.nice-menu-down li li { /* skins drop down menu items */
+  border-top: 0;
+}
+
+ul.nice-menu-down ul { /*skins drop down menu items*/
+  border-bottom-left-radius: 10px; /* LTR */
+  border-bottom-right-radius: 10px;
+  background-color: #E6E6E6;
+  height: auto;
+  padding: 0px 0px 0px 0px;
+  margin: 8px 9px 6px 1px;
+  opacity: 0.9;
+}
+
+ul.nice-menu-down ul li { /* skins drop down menu items */
+  clear: both;
+}
+
+ul.nice-menu-down li ul li ul { /*doesn't appear to do anything*/
+  left: 12.5em; /* LTR */
+  top: -1px;
+}
+
+ul.nice-menu-down .menuparent a{
+  width:18.5em;
+}
+
+ul.nice-menu-down .menuparent { /*padding for parents of menus, they have menu items*/
+  margin-left: 0;
+  padding-left: 3px;
+  margin-right: 5%;
+  width: 11%;  /*change this to adjust drop down menu shrinking*/
+}
+
+ul.nice-menu li.menu-path-front {
+  padding-left: 3px;
+  margin-left: 7%;
+  width: 10%;
+  margin-right: 3%
+}
+
+ul.nice-menu li.menu-path-announcements{
+  width: 12%;
+  padding-left: 3px;
+}
+
+
+ul.nice-menu-down .menuparent .last a{
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+ul.nice-menu-down li.menuparent {
+  background: none;
+}
+
+ul.nice-menu li.menu-path-front:hover{
+  background-color: #E6E6E6;
+  /*width: 92px;
+  margin-right: 68px;*/
+  height: 33px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+ul.nice-menu li.menu-path-announcements:hover{
+  background-color: #E6E6E6;
+  /*width: 135px;
+  margin-right: 44px;*/
+  height: 33px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+ul.nice-menu-down li.menuparent:hover {
+  background: none;
+  background-color: #E6E6E6;
+  /*width: 140px;
+  margin-right: 44px;*/
+  height: 33px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+ul.nice-menu-down li li.menuparent {
+  background: none;
+}
+
+ul.nice-menu-down li li.menuparent:hover {
+  background: none;
+}
+
+/******************************
+ Garland-specific CSS
+******************************/
+
+/**
+ * Global CSS for ALL menu types
+ */
+ul.nice-menu li {
+  margin: 0;
+  padding-left: 0; /* LTR */
+  background-image: none;
+}
+
+#header-region ul.nice-menu li {
+  margin: 0;
+  /* Padding rules are needed to deal with Garland's header line-height. */
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  background: #eee;
+}
+
+#header-region ul.nice-menu ul {
+  top: 1.8em;
+  left: -1px; /* LTR */
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin-right: 0; /* LTR */
+}
+
+#header-region ul.nice-menu ul {
+  top: 1.7em;
+}
+
+/**
+ * HORIZONTAL (down) menus
+ */
+#header-region ul.nice-menu-down li ul li ul {
+  left: 12.5em; /* LTR */
+  top: -1px;
+}
+
+#header-region ul.nice-menu-down li.menuparent {
+  background: #eee url("../images/arrow-down.png") right center no-repeat; /* LTR */
+}
+
+#header-region ul.nice-menu-down li.menuparent:hover {
+  background: #ccc url("../images/arrow-down.png") right center no-repeat; /* LTR */
+}
+
+#header-region ul.nice-menu-down li li.menuparent {
+  background: #eee url("../images/arrow-right.png") right center no-repeat; /* LTR */
+}
+
+#header-region ul.nice-menu-down li li.menuparent:hover {
+  background: #ccc url("../images/arrow-right.png") right center no-repeat; /* LTR */
+}

@@ -1,0 +1,413 @@
+<?php
+/**
+ * @file
+ */
+
+include_once('julio_core.features.inc');
+
+define('JULIO_CORE_OG_USER_REF', 'julio_og_user_group_ref');
+define('JULIO_CORE_OG_GROUP_REF', 'julio_og_group_ref');
+
+/**
+ * Implements hook_menu().
+ */
+function julio_core_menu() {
+  $items['admin/config/system/homepage-layout'] = array(
+    'title' => 'Homepage Layout',
+    'description' => 'Choose the homepage layout.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('julio_core_homepage_layout_select_form'),
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function julio_core_menu_breadcrumb_alter(&$active_trail, $item) {
+  global $user;
+
+  // hide all crumbs referencing /admin except for uid = 1
+  if ($user->uid != 1) {
+    foreach ($active_trail as $index => $item) {
+      if (isset($item['link_path'])) {
+        if (strpos($item['link_path'], 'admin') === 0) {
+          unset($active_trail[$index]);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_modules_installed().
+ *
+ * TODO: This should be removed after #73 gets a better solution
+ */
+function julio_core_modules_installed($modules) {
+  if (in_array(array('julio_homepage_slideshow_node', 'julio_homepage_slideshow'), $modules)) {
+    // we need to re-assess our homepage layout contexts because they have variable
+    // data dependent on julio_homepage_slideshow
+    context_invalidate_cache();
+  }
+}
+
+/**
+ * Implements hook_modules_uninstalled().
+ *
+ * TODO: This should be removed after #73 gets a better solution
+ */
+function julio_core_modules_uninstalled($modules) {
+  if (in_array(array('julio_homepage_slideshow_node', 'julio_homepage_slideshow'), $modules)) {
+    // we need to re-assess our homepage layout contexts because they have variable
+    // data dependent on julio_homepage_slideshow
+    context_invalidate_cache();
+  }
+}
+
+/**
+ *
+ */
+function julio_core_block_info() {
+  return array(
+    'footer' => array(
+      'info' => t('Julio: Footer Block'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+      'status' => 0,
+    ),
+    'group-content-links' => array(
+      'info' => t('Julio: Group Content Links'),
+      'cache' => DRUPAL_CACHE_PER_USER,
+      'status' => 0,
+    ),
+  );
+}
+
+/**
+ *
+ */
+function julio_core_block_view($delta = '') {
+  switch ($delta) {
+    case 'footer':
+      return array(
+        'subject' => NULL,
+        'content' => array(
+          '#type' => 'markup',
+          '#markup' => check_markup(variable_get('julio_core_footer_block_content', '<div>Click the contextual link on the right and choose "Configure Block" to change the footer text.</div>'), 'filtered_html', '', TRUE),
+        ),
+      );
+      break;
+    case 'group-content-links':
+      global $user;
+      $object = menu_get_object();
+      if (!user_is_anonymous()) {
+        if (!empty($object) && !og_is_group_type('node', $object->type)) {
+          // try to load the parent group
+          if (og_is_group_content_type('node', $object->type)) {
+            if (!empty($object->julio_og_group_ref[$object->language][0]['target_id'])) {
+              $object = node_load($object->julio_og_group_ref[$object->language][0]['target_id']);
+            }
+          }
+        }
+
+        if (!empty($object) && og_is_group_type('node', $object->type)) {
+          $og_membership = og_get_membership('node', $object->nid, 'user', $user->uid);
+          if (!empty($og_membership) && $og_membership->state == OG_STATE_ACTIVE) {
+            // they are a member of the group load the content links
+            $links = julio_core_build_content_links($object);
+            $content = '<div class="current-group">
+              <span class="current-group-title">' . t('Currently in: !group', array('!group' => l($object->title, 'node/' . $object->nid))) . '</span>' .
+              '<div class="group-content-links"><span class="group-content-links-leadin">' . t('Create new') . '</span>' . render($links) . '</div></div>';
+          }
+          elseif (empty($og_membership)) {
+            // they are not a member of the group load the join link
+            $links = array(
+              array(
+                '#type' => 'link',
+                '#title' => t('Join @group', array('@group' => check_plain($object->title))),
+                '#href' => 'group/node/' . $object->nid . '/subscribe',
+              ),
+            );
+            $content = '<div class="join-group">' . render($links) . '</div>';
+          }
+          else {
+            // they have requested membership but it is not active
+            $content = '<div class="group-pending"><span class="current-group-title">' . t('Your membership for !group is pending', array('!group' => l($object->title, 'node/' . $object->nid))) . '</span></div>';
+          }
+          return array(
+            'subject' => NULL,
+            'content' => $content,
+          );
+        }
+        else {
+          return array(
+            'subject' => NULL,
+            'content' => t('Not currently in any group'),
+          );
+        }
+      }
+      else {
+        return array(
+          'subject' => NULL,
+          'content' => NULL,
+        );
+      }
+      break;
+  }
+}
+
+function julio_core_block_configure($delta = '') {
+  $form = array();
+  switch ($delta) {
+    case 'footer':
+      $form['julio_core_footer_block_content'] = array(
+        '#type' => 'text_format',
+        '#format' => 'filtered_html',
+        '#default_value' => variable_get('julio_core_footer_block_content', '<div>Click the contextual link on the right and choose "Configure Block" to change the footer text.</div>'),
+      );
+      break;
+  }
+  return $form;
+}
+
+function julio_core_block_save($delta = '', $edit = array()) {
+  switch ($delta) {
+    case 'footer':
+      variable_set('julio_core_footer_block_content', $edit['julio_core_footer_block_content']['value']);
+      break;
+  }
+}
+
+function julio_core_build_content_links($object) {
+  $group_entities = og_get_all_group_content_bundle();
+  $groups = og_get_all_group_bundle();
+  $links = array();
+
+  // if we are in a top-level section add the appropriate group_type node creation links
+  if (isset($object->nid)) {
+    switch ($object->nid) {
+      case variable_get('julio_clubs_nid', -1):
+        $links[] = array(
+          '#type' => 'link',
+          '#title' => check_plain($groups['node']['julio_club']),
+          '#href' => 'node/add/julio-club',
+        );
+        break;
+      case variable_get('julio_departments_nid', -1):
+        $links[] = array(
+          '#type' => 'link',
+          '#title' => check_plain($groups['node']['julio_department']),
+          '#href' => 'node/add/julio-department',
+        );
+        break;
+      case variable_get('julio_admissions_node_nid', -1):
+        // no additional links here
+        break;
+      case variable_get('julio_teams_nid', -1):
+        $links[] = array(
+          '#type' => 'link',
+          '#title' => check_plain($groups['node']['julio_team']),
+          '#href' => 'node/add/julio-team',
+        );
+        break;
+    }
+  }
+
+  if (!empty($group_entities['node'])) {
+    // now add group content links
+    foreach ($group_entities['node'] as $bundle_type => $label) {
+      if (node_access('create', $bundle_type)) {
+        $links[] = array(
+          '#type' => 'link',
+          '#title' => check_plain($label),
+          '#href' => 'node/add/' . str_replace('_', '-', $bundle_type),
+          '#options' => array(
+            'query' => array(
+              JULIO_CORE_OG_GROUP_REF => $object->nid,
+            )
+          ),
+        );
+      }
+    }
+  }
+  return $links;
+}
+
+/**
+ * Implements hook_block_view_alter().
+ *
+ * Can't use hook_block_view_MODULE_DELTA_alter because delta has '-'
+ * http://drupal.org/node/1076132
+ */
+function julio_core_block_view_alter(&$data, $block) {
+  if ($block->module == 'menu' && $block->delta == 'menu-julio-contact-menu') {
+    $data['subject'] = '';
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function julio_core_form_node_form_alter(&$form, &$form_state, $form_id) {
+  // hide extraneous option from user
+  if (isset($form['media_nivo_slider_block'])) {
+    $form['media_nivo_slider_block'][$form['media_nivo_slider_block']['#language']]['#type'] = 'value';
+    $form['media_nivo_slider_block'][$form['media_nivo_slider_block']['#language']]['#value'] = $form['media_nivo_slider_block'][$form['media_nivo_slider_block']['#language']]['#default_value'];
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter
+ */
+function julio_core_form_block_admin_configure_alter(&$form, &$form_state, $form_id) {
+  $sections = array(
+    'visibility',
+    'regions',
+    'visibility_title'
+  );
+  foreach ($sections as $section) {
+    $form[$section]['#access'] = FALSE;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter
+ */
+function julio_core_form_quicktabs_form_alter(&$form, &$form_state, $form_id) {
+  if (variable_get('julio_core_cleanup_quicktab_ui', 1)) {
+    $sections = variable_get('julio_core_cleanup_quicktab_sections', array('ajax', 'renderer', 'options'));
+
+    foreach ($sections as $section) {
+      $form[$section]['#access'] = FALSE;
+    }
+
+    foreach (element_children($form['qt_wrapper']['tabs']) as $index) {
+      $form['qt_wrapper']['tabs'][$index]['type']['#options'] = array(
+        'block' => 'block',
+        'node' => 'node',
+      );
+    }
+  }
+
+}
+
+/**
+ *
+ */
+function julio_core_homepage_layout_select_form($form, &$form_state) {
+  $layouts = julio_core_get_homepage_layouts();
+
+  $header = array('layout' => t('Layout Preview'), 'description' => t('Description'));
+  $options = array();
+  $selected = '';
+
+  $enabled = 0;   // counter for how many enabled
+  if (!empty($layouts)) {
+    foreach ($layouts as $layout => $details) {
+      if ($layout != 'default') {
+        if (!empty($details['icon'])) {
+          $variables = array(
+            'path' => $details['icon'],
+            'alt' => t('@layout icon', array('@layout' => $layout)),
+            'attributes' => array(),
+          );
+          $icon = '<div class="homepage-layout-icon">' . theme_image($variables) . '</div>';
+        }
+        else {
+          $icon = '';
+        }
+        $options[$layout] = array(
+          'layout' => $icon,
+          'description' => check_plain($details['description']),
+        );
+
+        if (!$details['disabled']) {
+          $enabled++;
+          $selected = $layout;
+        }
+      }
+    }
+  }
+
+  if (!empty($layouts['default'])) {
+    if (!$layouts[$layouts['default']]['disabled'] && (empty($selected) || $enabled > 1)) {
+      $selected = $layouts['default'];
+    }
+  }
+
+  $form['layouts'] = array(
+    '#type' => 'tableselect',
+    '#header' => $header,
+    '#options' => $options,
+    '#multiple' => FALSE,
+    '#required' => TRUE,
+    '#default_value' => $selected,
+    '#empty' => t('No homepage layouts available.'),
+  );
+
+  $form['submit'] = array('#type' => 'submit', '#value' => t('Choose homepage layout'));
+  return $form;
+}
+
+/**
+ *
+ */
+function julio_core_homepage_layout_select_form_submit($form, &$form_state) {
+  ctools_include('export');
+  $layouts = julio_core_get_homepage_layouts();
+  if (!empty($form_state['values']['layouts'])) {
+    // disable all non-selected homepage layouts
+    foreach ($layouts as $layout => $details) {
+      if ($layout != $form_state['values']['layouts']) {
+        $context = context_load($layout);
+        if (!empty($context)) {
+          ctools_export_crud_disable($context->table, $context);
+        }
+      }
+    }
+
+    // enable selected homepage layout
+    $context = context_load($form_state['values']['layouts']);
+    if (!empty($context)) {
+      ctools_export_crud_enable($context->table, $context);
+    }
+  }
+  context_invalidate_cache();
+}
+
+
+/**
+ * Helper function to manage parsing the .info file for layouts to be exposed
+ * to the user
+ */
+function julio_core_get_homepage_layouts() {
+  $layouts = &drupal_static(__FUNCTION__);
+
+  if (!isset($layouts)) {
+    $path = drupal_get_path('module', 'julio_core');
+    $infofile = $path . '/julio_core.info';
+    $info = drupal_parse_info_file($infofile);
+    if (!empty($info['homepage_layout'])) {
+      foreach ($info['homepage_layout'] as $layout => $details) {
+        if (!empty($details['icon'])) {
+          $details['icon'] = $path . '/' . $details['icon'];
+          $context = context_load($layout);
+          if (!empty($context)) {
+            $details['disabled'] = $context->disabled;
+            $layouts[$layout] = $details;
+          }
+          else {
+            watchdog('julio_core', 'Invalid context listed in julio_core homepage layout', array(), WATCHDOG_NOTICE);
+          }
+        }
+      }
+    }
+
+    if (isset($info['homepage_layout']['default'])) {
+      $layouts['default'] = $info['homepage_layout']['default'];
+    }
+  }
+  return $layouts;
+}

@@ -1,0 +1,54 @@
+<?php
+
+
+function julio_gallery_install() {
+  // we need to add a term at install rather than depending on uuid features
+  // we just push that here.
+  $vocab = array(
+    'name' => st('Featured Image'),
+    'machine_name' => 'julio_featured_image',
+    'description' => '',
+    'hierarchy' => '0',
+    'module' => 'julio_gallery',
+    'weight' => '0',
+    'rdf_mapping' => array(
+      'rdftype' => array(
+        0 => 'skos:ConceptScheme',
+      ),
+      'name' => array(
+        'predicates' => array(
+          0 => 'dc:title',
+        ),
+      ),
+      'description' => array(
+        'predicates' => array(
+          0 => 'rdfs:comment',
+        ),
+      ),
+    ),
+  );
+  $vocab = (object) $vocab;
+  taxonomy_vocabulary_save($vocab);
+  
+  $vocab = taxonomy_vocabulary_machine_name_load('julio_featured_image');
+  
+  $term = array(
+    'vid' => $vocab->vid,
+    'name' => st('Feature in Group'),
+  );
+  $term = (object) $term;
+  
+  taxonomy_term_save($term);
+  
+  variable_set('julio_gallery_vid', $vocab->vid);
+  variable_set('julio_gallery_tid', $term->tid);
+}
+
+function julio_gallery_uninstall() {
+  $vid = variable_get('julio_gallery_vid', 0);
+  $tid = variable_get('julio_gallery_tid', 0);
+  taxonomy_vocabulary_delete($vid);
+  taxonomy_term_delete($tid);
+  variable_del('julio_gallery_vid');
+  variable_del('julio_gallery_tid');
+}

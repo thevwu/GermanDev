@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Clubs Events feature.
+ */
+
+include_once 'julio_clubs_events.features.inc';

@@ -1,0 +1,18 @@
+name = Slideshow
+description = Slideshow
+core = 7.x
+package = Julio: Core
+php = 5.2.4
+project = julio
+dependencies[] = image
+dependencies[] = julio_core
+dependencies[] = media_nivo_slider
+features[features_api][] = api:1
+features[image][] = julio_slideshow
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

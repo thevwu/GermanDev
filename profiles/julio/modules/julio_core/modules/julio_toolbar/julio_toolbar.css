@@ -1,0 +1,174 @@
+
+body.juliotoolbar {
+  padding-top: 2.2em;
+}
+body.juliotoolbar-drawer {
+  padding-top: 5.3em;
+}
+
+/**
+ * Aggressive resets so we can achieve a consistent look in hostile CSS
+ * environments.
+ */
+#juliotoolbar,
+#juliotoolbar * {
+  border: 0;
+  font-family: "Lucida Grande", Verdana, sans-serif;
+  line-height: inherit;
+  list-style: none;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  text-align: left; /* LTR */
+  vertical-align: baseline;
+}
+
+/**
+ * Base styles.
+ *
+ * We use a keyword for the toolbar font size to make it display consistently
+ * across different themes, while still allowing browsers to resize the text.
+ */
+#juliotoolbar {
+  background: #666;
+  color: #ccc;
+  font-size: 0.846em;
+  left: 0;
+  margin: 0 -20px;
+  padding: 0 20px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  -moz-box-shadow: 0 3px 20px #000;
+  -webkit-box-shadow: 0 3px 20px #000;
+  box-shadow: 0 3px 20px #000;
+  filter: progid:DXImageTransform.Microsoft.Shadow(color=#000000, direction='180', strength='10');
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#000000, direction='180', strength='10')";
+  z-index: 600;
+}
+#juliotoolbar div.collapsed {
+  display: none;
+  visibility: hidden;
+}
+#juliotoolbar a {
+  color: #fff;
+  text-decoration: none;
+}
+#juliotoolbar ul li,
+#juliotoolbar ul li a {
+  float: left; /* LTR */
+}
+
+/* View overrides */
+#juliotoolbar .views-field,
+#juliotoolbar .views-field .field-content {
+  display: inline-block;
+}
+#juliotoolbar .views-field ul li,
+#juliotoolbar .views-field ul li a {
+  float: none;
+  display: inline;
+}
+#juliotoolbar .views-field .views-label {
+  padding-left: 10px;
+  border-left: 1px solid #ccc;
+}
+
+/**
+ * Administration menu.
+ */
+#juliotoolbar div.juliotoolbar-menu {
+  background: #000;
+  line-height: 20px;
+  padding: 5px 50px 5px 10px; /* LTR */
+  position: relative;
+}
+#juliotoolbar-home a span {
+  background: url(juliotoolbar.png) no-repeat 0 -45px;
+  display: block;
+  height: 14px;
+  margin: 3px 0px;
+  text-indent: -9999px;
+  vertical-align: text-bottom;
+  width: 11px;
+}
+#juliotoolbar-user {
+  float: right; /* LTR */
+}
+#juliotoolbar-menu {
+  float: left; /* LTR */
+}
+#juliotoolbar div.juliotoolbar-menu a.toggle {
+  background: url(juliotoolbar.png) 0 -20px no-repeat;
+  bottom: 0;
+  cursor: pointer;
+  height: 25px;
+  overflow: hidden;
+  position: absolute;
+  right: 10px; /* LTR */
+  text-indent: -9999px;
+  width: 25px;
+}
+#juliotoolbar div.juliotoolbar-menu a.toggle:focus,
+#juliotoolbar div.juliotoolbar-menu a.toggle:hover {
+  background-position:  -50px -20px;
+}
+#juliotoolbar div.juliotoolbar-menu a.toggle-active {
+  background-position:  -25px -20px;
+}
+#juliotoolbar div.juliotoolbar-menu a.toggle-active.toggle:focus,
+#juliotoolbar div.juliotoolbar-menu a.toggle-active.toggle:hover {
+  background-position:  -75px -20px;
+}
+#juliotoolbar div.juliotoolbar-menu ul li a {
+  padding: 0 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+#juliotoolbar div.juliotoolbar-menu ul li a:focus,
+#juliotoolbar div.juliotoolbar-menu ul li a:hover,
+#juliotoolbar div.juliotoolbar-menu ul li a:active,
+#juliotoolbar div.juliotoolbar-menu ul li a.active:focus {
+  background: #444;
+}
+#juliotoolbar div.juliotoolbar-menu ul li a.active:hover,
+#juliotoolbar div.juliotoolbar-menu ul li a.active:active,
+#juliotoolbar div.juliotoolbar-menu ul li a.active,
+#juliotoolbar div.juliotoolbar-menu ul li li.active-trail a {
+  background: url(juliotoolbar.png) 0 0 repeat-x;
+  text-shadow: #333 0 1px 0;
+}
+#juliotoolbar .current-group {
+  float: left;
+}
+#juliotoolbar .group-content-links {
+  display: inline;
+  margin-left: 10px;
+}
+#juliotoolbar .group-content-links a {
+  padding: 0 5px;
+}
+
+/**
+ * Collapsed drawer of additional toolbar content.
+ */
+#juliotoolbar div.juliotoolbar-drawer {
+  position: relative;
+  padding: 5px 10px;
+}
+
+/**
+ * IE 6 Fix.
+ *
+ * IE 6 shows elements with position:fixed as position:static so we replace
+ * it with position:absolute; toolbar needs its z-index to stay above overlay.
+ */
+* html #juliotoolbar {
+  left: -20px;
+  margin: 0;
+  padding-right: 0;
+  position: absolute;
+  right: 0;
+  width: 100%;
+}

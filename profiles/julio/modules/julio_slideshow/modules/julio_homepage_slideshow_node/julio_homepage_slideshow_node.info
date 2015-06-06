@@ -1,0 +1,13 @@
+name = Homepage Slideshow Node
+description = Creates the homepage slideshow node
+core = 7.x
+project = "julio"
+dependencies[] = "julio_slideshow"
+package = Julio: Core
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+

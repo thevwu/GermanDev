@@ -1,0 +1,53 @@
+<?php
+/*
+ * @file Creates/deletes Admissions node when module is enabled/uninstalled.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function julio_admissions_node_install() {
+  // Add an admissions node of type julio_administrative_unit
+  $node = new stdClass;
+  $node->type = 'julio_administrative_unit';
+
+  node_object_prepare($node);
+
+  $node->title = st('Admissions');
+  $node->language = LANGUAGE_NONE;
+  $node->path = array(
+    'pathauto' => FALSE,
+    'alias' => 'admissions',
+  );
+
+  $bodytext = st('This is the admissions landing page. You should click the "edit" tab and replace this with content pertinent to admissions at your institution.');
+  $node->body[$node->language][0]['value']   = $bodytext;
+  $node->body[$node->language][0]['summary'] = text_summary($bodytext);
+  $node->body[$node->language][0]['format'] = 'filtered_html';
+
+  $node->menu['enabled'] = 1;
+  $node->menu['link_title'] = st('Admissions');
+  $node->menu['description'] = st('Admissions');
+  $node->menu['menu_name'] = 'main-menu';
+  $node->menu['weight'] = 6;
+
+  $node->promote = 0;
+
+  node_save($node);
+  variable_set('julio_admissions_node_nid', $node->nid);
+
+  // Update the menu router information.
+  menu_rebuild();
+
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function julio_admissions_node_uninstall() {
+  $nid = variable_get('julio_admissions_node_nid', 0);
+  if (!empty($nid)) {
+    node_delete($nid);
+  }
+  variable_del('julio_admissions_node_nid');
+}

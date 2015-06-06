@@ -1,0 +1,55 @@
+<?php
+/*
+ * @file Creates/deletes the Student Life club node on enable/uninstall.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function julio_clubs_node_install() {
+  // Add an clubs node of type julio_administrative_unit
+  $node = new stdClass;
+  $node->type = 'julio_administrative_unit';
+
+  node_object_prepare($node);
+
+  $node->title = st('Student Life');
+  $node->language = LANGUAGE_NONE;
+  $node->path = array(
+    'pathauto' => FALSE,
+    'alias' => 'student-life',
+  );
+
+  $bodytext = st('This is the student life landing page. You should click the "edit" tab and replace this with content pertinent to student life at your institution.');
+  $node->body[$node->language][0]['value']   = $bodytext;
+  $node->body[$node->language][0]['summary'] = text_summary($bodytext);
+  $node->body[$node->language][0]['format'] = 'filtered_html';
+
+
+
+  $node->menu['enabled'] = 1;
+  $node->menu['link_title'] = st('Student Life');
+  $node->menu['description'] = st('Student Life');
+  $node->menu['menu_name'] = 'main-menu';
+  $node->menu['weight'] = 3;
+
+  $node->promote = 0;
+
+  node_save($node);
+  variable_set('julio_clubs_nid', $node->nid);
+
+  // Update the menu router information.
+  menu_rebuild();
+
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function julio_clubs_node_uninstall() {
+  $nid = variable_get('julio_clubs_nid', 0);
+  if (!empty($nid)) {
+    node_delete($nid);
+  }
+  variable_del('julio_clubs_nid');
+}

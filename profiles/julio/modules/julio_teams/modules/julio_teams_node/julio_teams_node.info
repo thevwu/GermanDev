@@ -1,0 +1,13 @@
+name = Teams Node
+description = Creates the teams node
+core = 7.x
+project = "julio"
+dependencies[] = "julio_teams"
+package = Julio: Teams
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "julio"
+datestamp = "1380619063"
+
